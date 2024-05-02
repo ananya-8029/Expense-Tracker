@@ -1,0 +1,31 @@
+.main_container {
+  background-color: #fff;
+}
+
+.main_container h1 {
+  font-family: "Montserrat", sans-serif;
+  background: -webkit-linear-gradient(#b39efe, #091384);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: -5px 7px 4px rgba(0, 0, 0, 0.5);
+}
+
+.sub_container {
+  box-shadow: inset -2px 1px 3px #0000003b;
+}
+
+.sub_container p {
+  font-family: "Poppins", sans-serif;
+}
+
+.sub_container div span {
+  font-family: "Poppins", sans-serif;
+}
+
+.sub_container span {
+  font-family: "Radio Canada Big", sans-serif;
+}
+
+.sub_container button {
+  font-family: "Poppins", sans-serif;
+}
