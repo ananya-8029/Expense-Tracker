@@ -13,7 +13,7 @@ app.use(cors());
 
 // routes
 readdirSync("./routes").map((route) => {
-  app.use("./api/user", require("./routes/" + route));
+  app.use("/api/user", require("./routes/" + route));
 });
 
 const server = async () => {

@@ -2,5 +2,5 @@ const { addincome } = require("../controllers/income");
 
 const router = require("express").Router();
 
-router.post("/add-income", addincome);
+router.post("/addincome", addincome);
 module.exports = router;
