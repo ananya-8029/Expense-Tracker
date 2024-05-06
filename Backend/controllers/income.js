@@ -27,3 +27,12 @@ exports.addincome = async (req, res) => {
     return res.status(500).json({ message: "Income failed to add." });
   }
 };
+
+exports.getincomes = async (req, res) => {
+  try {
+    const incomes = await IncomeSchema.find().sort({ createdAt: -1 });
+    res.status(200).json(incomes);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
