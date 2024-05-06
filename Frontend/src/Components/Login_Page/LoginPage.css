@@ -1,0 +1,15 @@
+.loginHeader {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.loginform{
+    font-family: "Poppins", sans-serif;
+}
+
+.loginform div{
+    box-shadow: 0px 4px 4px 1px #d6d5d5;
+}
+
+.btn{
+    font-family: "Poppins", sans-serif;
+}
