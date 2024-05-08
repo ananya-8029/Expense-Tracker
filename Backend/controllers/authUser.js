@@ -23,7 +23,7 @@ exports.register = async (req, res) => {
       const data = { newUser: { id: newUser.id } };
 
       const authToken = jwt.sign(data, process.env.JWT_KEY);
-      return res.statue(200).json({ authToken: authToken });
+      return res.status(200).json({ authToken: authToken });
     }
   } catch (error) {
     console.log(error.message);

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,8 +14,9 @@ const RegisterPage = () => {
         "http://localhost:8000/api/auth/register",
         { username, email, password }
       );
-
-      console.log(response.data)
+      if (response.statusText === "OK") {
+        navigate("/existinguser");
+      }
     } catch (error) {
       console.log(error.message);
     }
