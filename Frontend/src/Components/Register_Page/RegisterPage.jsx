@@ -7,6 +7,8 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMessage, setErrMessage] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -14,11 +16,15 @@ const RegisterPage = () => {
         "http://localhost:8000/api/auth/register",
         { username, email, password }
       );
+      setEmail("");
+      setUsername("");
+      setPassword("");
+      setErrMessage(null)
       if (response.statusText === "OK") {
-        navigate("/existinguser");
+        navigate("/existing_user");
       }
     } catch (error) {
-      console.log(error.message);
+      setErrMessage(error.response.data.message);
     }
   };
   return (
@@ -98,6 +104,7 @@ const RegisterPage = () => {
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
             </div>
+            {errMessage && <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>}
           </form>
           <div className="btn flex flex-col justify-center items-center">
             <button
@@ -108,7 +115,7 @@ const RegisterPage = () => {
             </button>
             <p className="text-[0.8vmax] py-[1vmax]">
               Already have an account?
-              <Link to="/existinguser">
+              <Link to="/user_login">
                 <span className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer">
                   Sign in
                 </span>

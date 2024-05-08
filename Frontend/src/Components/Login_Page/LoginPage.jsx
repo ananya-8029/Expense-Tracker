@@ -1,12 +1,14 @@
 // import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Login_Page/LoginPage.css";
 import axios from "axios";
 import { useState } from "react";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMessage, setErrMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,9 +17,14 @@ const LoginPage = () => {
         "http://localhost:8000/api/auth/login",
         { email, password }
       );
-      console.log(response.data);
+      if (response.statusText === "OK") {
+        navigate("/home_page");
+      }
+      setEmail("");
+      setPassword("");
+      setErrMessage(null)
     } catch (error) {
-      console.log(error.message);
+      setErrMessage(error.response.data.message);
     }
   };
   return (
@@ -75,6 +82,7 @@ const LoginPage = () => {
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
             </div>
+            {errMessage && <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>}
           </form>
           <div className="btn flex flex-col justify-center items-center">
             <button
@@ -85,7 +93,7 @@ const LoginPage = () => {
             </button>
             <p className="text-[0.8vmax] py-[1vmax]">
               Don&apos;t have an account?
-              <Link to="/newuser">
+              <Link to="/new_user">
                 <span className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer">
                   Create One!
                 </span>
