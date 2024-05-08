@@ -5,15 +5,26 @@ const app = express();
 const port = process.env.PORT;
 const { db } = require("./db/db");
 const router = require("./routes/transactions");
-const { readdirSync, read } = require("fs");
+// const { readdirSync, read } = require("fs");
+const fs = require("fs");
+const path = require("path");
 
 // middlewares
 app.use(express.json());
 app.use(cors());
 
 // routes
-readdirSync("./routes").map((route) => {
-  app.use("/api/user", require("./routes/" + route));
+// readdirSync("./routes").map((route) => {
+//   app.use("/api/user", require("./routes/" + route));
+//   app.use("/api/auth", require("./routes/" + route));
+// });
+
+const routeFiles = fs.readdirSync(path.join(__dirname, "routes"));
+
+routeFiles.forEach((routeFile) => {
+  const routes = require(path.join(__dirname, "routes", routeFile));
+  app.use("/api/user", routes);
+  app.use("/api/auth", routes);
 });
 
 const server = async () => {
