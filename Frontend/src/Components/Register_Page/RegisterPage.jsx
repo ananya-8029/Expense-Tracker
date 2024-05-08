@@ -1,5 +1,24 @@
+import axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
 const RegisterPage = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/register",
+        { username, email, password }
+      );
+
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <>
       <div className="min-h-screen h-screen w-full flex">
@@ -26,6 +45,9 @@ const RegisterPage = () => {
                 type="username"
                 name="username"
                 placeholder="Username"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
                 required
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
@@ -45,6 +67,9 @@ const RegisterPage = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 required
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
@@ -64,13 +89,19 @@ const RegisterPage = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 required
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
             </div>
           </form>
           <div className="btn flex flex-col justify-center items-center">
-            <button className="relative hover:text-[#fff] py-2 px-6 after:absolute after:h-1 after:hover:h-[200%] transition-all duration-500 hover:transition-all hover:duration-500 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden z-20 after:z-[-20] after:bg-[#624FA4] after:rounded-t-full after:w-full after:bottom-0 after:left-0 text-[#372b63] w-[8vmax] font-semibold text-[1.1vmax]">
+            <button
+              onClick={handleSubmit}
+              className="relative hover:text-[#fff] py-2 px-6 after:absolute after:h-1 after:hover:h-[200%] transition-all duration-500 hover:transition-all hover:duration-500 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden z-20 after:z-[-20] after:bg-[#624FA4] after:rounded-t-full after:w-full after:bottom-0 after:left-0 text-[#372b63] w-[8vmax] font-semibold text-[1.1vmax]"
+            >
               Sign up
             </button>
             <p className="text-[0.8vmax] py-[1vmax]">
