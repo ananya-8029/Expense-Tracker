@@ -1,10 +1,13 @@
+import NavBar from "../NavBar/NavBar";
 
 const HomePage = () => {
   return (
     <>
-     <div>Home Pag</div> 
+      <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
+        <NavBar/>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

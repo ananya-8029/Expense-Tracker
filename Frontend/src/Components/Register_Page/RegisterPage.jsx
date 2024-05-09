@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
+import { emailIcon, passwordIcon, usernameIcon } from "../../utils/Icons";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -58,16 +59,7 @@ const RegisterPage = () => {
           </div>
           <form className="loginform h-[40%] flex flex-col justify-center items-center w-[50%] gap-6">
             <div className="w-full flex justify-center items-center px-[1vmax]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="32"
-                height="32"
-                fill="rgba(98,79,164,1)"
-              >
-                <path fill="none" d="M0 0h24v24H0z"></path>
-                <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path>
-              </svg>
+              {usernameIcon}
               <input
                 type="username"
                 name="username"
@@ -80,16 +72,7 @@ const RegisterPage = () => {
               />
             </div>
             <div className="w-full flex justify-center items-center px-[1vmax]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="36"
-                height="36"
-                fill="rgba(98,79,164,1)"
-              >
-                <path fill="none" d="M0 0h24v24H0z"></path>
-                <path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM12.0606 11.6829L5.64722 6.2377L4.35278 7.7623L12.0731 14.3171L19.6544 7.75616L18.3456 6.24384L12.0606 11.6829Z"></path>
-              </svg>
+              {emailIcon}
               <input
                 type="email"
                 name="email"
@@ -102,16 +85,7 @@ const RegisterPage = () => {
               />
             </div>
             <div className="w-full flex items-center px-[1vmax]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="36"
-                height="36"
-                fill="rgba(98,79,164,1)"
-              >
-                <path fill="none" d="M0 0h24v24H0z"></path>
-                <path d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z"></path>
-              </svg>
+              {passwordIcon}
               <input
                 type="password"
                 name="password"
