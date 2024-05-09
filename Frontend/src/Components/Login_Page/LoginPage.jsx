@@ -1,10 +1,12 @@
 // import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../Login_Page/LoginPage.css";
 import axios from "axios";
 import { useState } from "react";
+import { Audio } from "react-loader-spinner";
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,13 +24,26 @@ const LoginPage = () => {
       }
       setEmail("");
       setPassword("");
-      setErrMessage(null)
+      setErrMessage(null);
     } catch (error) {
       setErrMessage(error.response.data.message);
     }
   };
+
+  const handleSignupBtn = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/new_user");
+    }, 2500);
+  };
   return (
     <>
+      {isLoading && (
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <Audio type="TailSpin" color="#ffffff" height={80} width={80} />
+        </div>
+      )}
       <div className="min-h-screen h-screen w-full flex">
         <div className="w-[40%] h-full flex flex-col justify-center items-center">
           <div className="loginHeader flex flex-col items-center">
@@ -82,7 +97,9 @@ const LoginPage = () => {
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
             </div>
-            {errMessage && <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>}
+            {errMessage && (
+              <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>
+            )}
           </form>
           <div className="btn flex flex-col justify-center items-center">
             <button
@@ -93,11 +110,12 @@ const LoginPage = () => {
             </button>
             <p className="text-[0.8vmax] py-[1vmax]">
               Don&apos;t have an account?
-              <Link to="/new_user">
-                <span className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer">
-                  Create One!
-                </span>
-              </Link>
+              <button
+                onClick={handleSignupBtn}
+                className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer"
+              >
+                Create One!
+              </button>
             </p>
           </div>
         </div>

@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Audio } from "react-loader-spinner";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +21,7 @@ const RegisterPage = () => {
       setEmail("");
       setUsername("");
       setPassword("");
-      setErrMessage(null)
+      setErrMessage(null);
       if (response.statusText === "OK") {
         navigate("/existing_user");
       }
@@ -27,8 +29,21 @@ const RegisterPage = () => {
       setErrMessage(error.response.data.message);
     }
   };
+
+  const handleSignin = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/user_login");
+    }, 2500);
+  };
   return (
     <>
+      {isLoading && (
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <Audio type="TailSpin" color="#ffffff" height={80} width={80} />
+        </div>
+      )}
       <div className="min-h-screen h-screen w-full flex">
         <div className="w-[40%] h-full flex flex-col justify-center items-center">
           <div className="loginHeader flex flex-col items-center">
@@ -104,7 +119,9 @@ const RegisterPage = () => {
                 className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
               />
             </div>
-            {errMessage && <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>}
+            {errMessage && (
+              <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>
+            )}
           </form>
           <div className="btn flex flex-col justify-center items-center">
             <button
@@ -115,11 +132,12 @@ const RegisterPage = () => {
             </button>
             <p className="text-[0.8vmax] py-[1vmax]">
               Already have an account?
-              <Link to="/user_login">
-                <span className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer">
-                  Sign in
-                </span>
-              </Link>
+              <button
+                onClick={handleSignin}
+                className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer"
+              >
+                Sign in
+              </button>
             </p>
           </div>
         </div>
