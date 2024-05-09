@@ -23,7 +23,11 @@ const RegisterPage = () => {
       setPassword("");
       setErrMessage(null);
       if (response.statusText === "OK") {
-        navigate("/existing_user");
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("/existing_user");
+        }, 2500);
       }
     } catch (error) {
       setErrMessage(error.response.data.message);

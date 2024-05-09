@@ -20,7 +20,11 @@ const LoginPage = () => {
         { email, password }
       );
       if (response.statusText === "OK") {
-        navigate("/home_page");
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("/home_page");
+        }, 2500);
       }
       setEmail("");
       setPassword("");
