@@ -1,0 +1,10 @@
+.active::before {
+  content: "";
+  height: 100%;
+  width: 150%;
+  position: absolute;
+  background-color: #f7f6f6;
+  top: 0;
+  left: 0;
+  border-radius: 6px;
+}
