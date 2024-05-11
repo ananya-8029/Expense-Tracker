@@ -8,22 +8,27 @@ import {
 } from "../../utils/Icons";
 import "../Menu_Bar/MenuBar.css";
 
-const MenuBar = () => {
+// eslint-disable-next-line react/prop-types
+const MenuBar = ({setBtnClick}) => {
   const [icon, setIcon] = useState("dashBoardIcon");
   const handleActivebtn = (iconName) => {
     setIcon(iconName);
+    setBtnClick(iconName)
   };
 
-  console.log(icon);
   return (
     <>
-      <div className="h-screen w-[5vmax] flex justify-center items-center">
+      <div className="h-screen w-[5vmax] flex justify-center items-center fixed">
         <div className="h-[97%] w-[95%] bg-white rounded-xl mx-[0.5vmax] flex items-center flex-col">
           <div className="h-[25%] w-full flex justify-center items-center flex-col gap-10">
             <div className="h-[3vmax] w-[3vmax] rounded-full">
-              <img className="object-fill rounded-full h-full w-full" src="https://picsum.photos/id/1/200/300" alt="" />
+              <img
+                className="object-fill rounded-full h-full w-full"
+                src="https://picsum.photos/id/1/200/300"
+                alt=""
+              />
             </div>
-            <div className="w-[85%] h-[25%] flex justify-center items-center relative">
+            <div className="w-[85%] h-[25%] flex justify-center items-center relative overflow-hidden">
               <div className={`${icon == "homeIcon" ? "active" : ""}`}>
                 <button
                   onClick={() => handleActivebtn("homeIcon")}
@@ -35,7 +40,7 @@ const MenuBar = () => {
             </div>
           </div>
           <div className=" flex flex-col justify-center items-center h-[45%] gap-[1.5vmax] border-y-[4px] w-[80%] border-[#F7F6F6]">
-            <div className="mt-[2vmax] w-full h-full flex justify-center items-center cursor-pointer relative">
+            <div className="mt-[2vmax] w-full h-full flex justify-center items-center cursor-pointer relative overflow-hidden">
               <div className={`${icon == "dashBoardIcon" ? "active" : ""}`}>
                 <button
                   onClick={() => handleActivebtn("dashBoardIcon")}
@@ -45,7 +50,7 @@ const MenuBar = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full h-full flex justify-center items-center cursor-pointer hover:scale-90 transition-all duration-300 hover:transition-all hover:duration-300 relative">
+            <div className="w-full h-full flex justify-center items-center cursor-pointer hover:scale-90 transition-all duration-300 hover:transition-all hover:duration-300 relative overflow-hidden">
               <div className={`${icon == "transactionIcon" ? "active" : ""}`}>
                 <button
                   onClick={() => handleActivebtn("transactionIcon")}
@@ -55,7 +60,7 @@ const MenuBar = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full h-full flex justify-center items-center cursor-pointer hover:scale-90 transition-all duration-300 hover:transition-all hover:duration-300 relative">
+            <div className="w-full h-full flex justify-center items-center cursor-pointer hover:scale-90 transition-all duration-300 hover:transition-all hover:duration-300 relative overflow-hidden">
               <div className={`${icon == "viewIncomeIcon" ? "active" : ""}`}>
                 <button
                   onClick={() => handleActivebtn("viewIncomeIcon")}
@@ -65,7 +70,7 @@ const MenuBar = () => {
                 </button>
               </div>
             </div>
-            <div className="mb-[2vmax] w-full h-full flex justify-center items-center cursor-pointer relative">
+            <div className="mb-[2vmax] w-full h-full flex justify-center items-center cursor-pointer relative overflow-hidden">
               <div className={`${icon == "viewExpensesIcon" ? "active" : ""}`}>
                 <button
                   onClick={() => handleActivebtn("viewExpensesIcon")}

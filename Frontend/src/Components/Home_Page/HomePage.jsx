@@ -1,13 +1,33 @@
 import NavBar from "../NavBar/NavBar";
 import MenuBar from "../Menu_Bar/MenuBar";
+import DashboardPage from "../Dashboard_Page/DashboardPage";
+import { useState } from "react";
+import TransactionPage from "../Transaction_Page/TransactionPage";
+import IncomePage from "../Income_Page/IncomePage";
+import ExpensePage from "../Expense_Page/ExpensePage";
 const HomePage = () => {
+  const [btnClick, setBtnClick] = useState("dashBoardIcon");
+
+  const displayData = () => {
+    switch (btnClick) {
+      case "dashBoardIcon":
+        return <DashboardPage />;
+      case "transactionIcon":
+        return <TransactionPage />;
+      case "viewIncomeIcon":
+        return <IncomePage />;
+      case "viewExpensesIcon":
+        return <ExpensePage />;
+    }
+  };
   return (
     <>
       <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
         <div className="flex justify-end">
-          <NavBar />
+          <NavBar btnClick={btnClick} />
         </div>
-        <MenuBar />
+        <MenuBar setBtnClick={setBtnClick} />
+        {displayData()}
       </div>
     </>
   );
