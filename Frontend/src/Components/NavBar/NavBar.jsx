@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 // eslint-disable-next-line react/prop-types
 const NavBar = ({ btnClick }) => {
   const [header, setHeader] = useState("Dashboard");
+  const [isDropdown, setIsDropdown] = useState(false);
+
   useEffect(() => {
     switch (btnClick) {
       case "dashBoardIcon":
@@ -25,6 +27,10 @@ const NavBar = ({ btnClick }) => {
     }
   }, [btnClick]);
 
+  const handleDropDown = () => {
+    setIsDropdown(true);
+  };
+
   return (
     <>
       <div className="h-[4vmax] w-[95%] flex justify-center items-center fixed">
@@ -43,7 +49,7 @@ const NavBar = ({ btnClick }) => {
               placeholder="Search for transactions, expenses etc."
             />
           </div>
-          <div className="bg-[#f7f6f6] h-[3.2vmax] w-[17%] mx-[1vmax] rounded-xl flex justify-center items-center">
+          <div className="bg-[#f7f6f6] h-[3.2vmax] w-[17%] mx-[1vmax] rounded-xl flex justify-center items-center relative">
             <div className="flex flex-3 h-[2.8vmax] w-[3vmax] rounded-full mx-[1vmax]">
               <img
                 className="object-fill rounded-full h-full w-full"
@@ -59,8 +65,15 @@ const NavBar = ({ btnClick }) => {
                 abc@gmail.com
               </span>
             </div>
-            <button className="flex-2 flex items-center justify-center mx-[1vmax]">
-              {dropDownList}
+            <button
+              onClick={handleDropDown}
+              className={`top-[0] left-0 flex-2 flex items-center justify-center mx-[1vmax] ${
+                isDropdown ? "activebtn" : ""
+              }`}
+            >
+              <span className={`${isDropdown ? "rotatebtn" : ""}`}>
+                {dropDownList}
+              </span>
             </button>
           </div>
         </div>

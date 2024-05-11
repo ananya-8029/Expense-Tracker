@@ -9,3 +9,18 @@
 .nav_header {
   font-family: "Nunito Sans", sans-serif;
 }
+
+.rotatebtn{
+  transform: rotate(180deg);
+}
+
+.activebtn::before{
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  height: 10vmax;
+  width: 15vmax;
+  top: 4vmax;
+  right: 0;
+  border-radius: 5px;
+}
