@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   dashBoardIcon,
+  homeIcon,
   transactionIcon,
   viewExpensesIcon,
   viewIncomeIcon,
@@ -18,8 +19,20 @@ const MenuBar = () => {
     <>
       <div className="h-screen w-[5vmax] flex justify-center items-center">
         <div className="h-[97%] w-[95%] bg-white rounded-xl mx-[0.5vmax] flex items-center flex-col">
-          <div className="h-[25%] w-full flex justify-center items-center">
-            <div className="h-[3vmax] w-[3vmax] rounded-full border-2 border-purple-500"></div>
+          <div className="h-[25%] w-full flex justify-center items-center flex-col gap-10">
+            <div className="h-[3vmax] w-[3vmax] rounded-full">
+              <img className="object-fill rounded-full h-full w-full" src="https://picsum.photos/id/1/200/300" alt="" />
+            </div>
+            <div className="w-[85%] h-[25%] flex justify-center items-center relative">
+              <div className={`${icon == "homeIcon" ? "active" : ""}`}>
+                <button
+                  onClick={() => handleActivebtn("homeIcon")}
+                  className="relative z-[2] hover:scale-90 transition-all duration-300 hover:transition-all hover:duration-300"
+                >
+                  {homeIcon}
+                </button>
+              </div>
+            </div>
           </div>
           <div className=" flex flex-col justify-center items-center h-[45%] gap-[1.5vmax] border-y-[4px] w-[80%] border-[#F7F6F6]">
             <div className="mt-[2vmax] w-full h-full flex justify-center items-center cursor-pointer relative">

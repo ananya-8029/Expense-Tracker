@@ -21,7 +21,7 @@ const NavBar = () => {
             />
           </div>
           <div className="bg-[#f7f6f6] h-[3.2vmax] w-[17%] mx-[1vmax] rounded-xl flex justify-center items-center">
-            <div className="flex flex-3 h-[2.8vmax] w-[3vmax] rounded-full bg-purple-300 mx-[1vmax]"></div>
+            <div className="flex flex-3 h-[2.8vmax] w-[3vmax] rounded-full mx-[1vmax]"><img className="object-fill rounded-full h-full w-full" src="https://picsum.photos/id/1/200/300" alt="" /></div>
             <div className="profile flex-1 flex flex-col justify-center items-center">
               <span className="text-[#454242] text-[1.1vmax] font-medium">
                 User Name
