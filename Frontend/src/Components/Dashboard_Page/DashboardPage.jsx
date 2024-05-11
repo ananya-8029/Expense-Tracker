@@ -1,7 +1,7 @@
 const DashboardPage = () => {
   return (
     <>
-     <div className="h-screen w-full bg-blue-400"></div> 
+     <div className="h-screen w-full"></div> 
     </>
   )
 }
