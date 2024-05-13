@@ -2,18 +2,28 @@ import { useState } from "react";
 import {
   dashBoardIcon,
   homeIcon,
+  signOuticon,
   transactionIcon,
   viewExpensesIcon,
   viewIncomeIcon,
 } from "../../utils/Icons";
 import "../Menu_Bar/MenuBar.css";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-const MenuBar = ({setBtnClick}) => {
+const MenuBar = ({ setBtnClick }) => {
   const [icon, setIcon] = useState("dashBoardIcon");
+  const navigate = useNavigate();
+  
   const handleActivebtn = (iconName) => {
     setIcon(iconName);
-    setBtnClick(iconName)
+    setBtnClick(iconName);
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("authTokenExpiration");
+    localStorage.removeItem("authToken");
+    navigate("/user_login");
   };
 
   return (
@@ -80,6 +90,9 @@ const MenuBar = ({setBtnClick}) => {
                 </button>
               </div>
             </div>
+          </div>
+          <div className="h-[30%] w-full flex justify-center items-end py-[2vmax]">
+            <button onClick={handleSignOut}>{signOuticon}</button>
           </div>
         </div>
       </div>
