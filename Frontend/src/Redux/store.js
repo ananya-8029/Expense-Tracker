@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { incomeReducer } from "./Reducers/IncomeSlice";
 import { userReducer } from "./Reducers/UsersSlice";
+import { fetchIncome } from "./middleswares";
 
-// eslint-disable-next-line react-refresh/only-export-components
-export default configureStore({
+const store = configureStore({
   reducer: { incomeReducer, userReducer },
 });
+
+store.dispatch(fetchIncome)
+
+export default store;

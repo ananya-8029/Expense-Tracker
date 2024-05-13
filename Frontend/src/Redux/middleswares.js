@@ -3,9 +3,27 @@ import axios from "axios";
 
 // fetching incomes
 export const fetchIncome = async () => {
-    try {
-        const response = await axios.get("http://localhost:8000/api/user/getincomes")
-    } catch (error) {
-        console.log(error)
+  try {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      return;
     }
+    const response = await axios.get(
+      "http://localhost:8000/api/user/getincomes",
+      {
+        headers: {
+          "auth-token": authToken,
+        },
+      }
+    );
+    console.log(authToken);
+    if (response.status !== "OK") {
+      console.error("Failed to fetch all incomes: ", response.status);
+      return;
+    }
+
+    const incomes = response.json();
+  } catch (error) {
+    console.log(error);
+  }
 };
