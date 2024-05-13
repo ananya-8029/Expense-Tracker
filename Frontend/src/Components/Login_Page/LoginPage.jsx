@@ -59,12 +59,10 @@ const LoginPage = () => {
     const authToken = localStorage.getItem("authToken");
     const expirationTime = localStorage.getItem("authTokenExpiration");
 
-    const expirationDate = new Date(expirationTime);
-
     if (!authToken) {
       handleSubmit();
     } else {
-      if (new Date().getTime() > parseInt(expirationDate, 10)) {
+      if (new Date().getTime() > parseInt(expirationTime, 10)) {
         localStorage.removeItem("authTokenExpiration");
         localStorage.removeItem("authToken");
         handleSubmit();

@@ -13,11 +13,6 @@ const path = require("path");
 app.use(express.json());
 app.use(cors());
 
-// routes
-// readdirSync("./routes").map((route) => {
-//   app.use("/api/user", require("./routes/" + route));
-//   app.use("/api/auth", require("./routes/" + route));
-// });
 
 const routeFiles = fs.readdirSync(path.join(__dirname, "routes"));
 

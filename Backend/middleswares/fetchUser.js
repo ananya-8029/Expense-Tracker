@@ -12,6 +12,7 @@ const fetchuser = (req, res, next) => {
     req.user = data.user;
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).json({ message: "Not a valid token! " });
   }
 };
