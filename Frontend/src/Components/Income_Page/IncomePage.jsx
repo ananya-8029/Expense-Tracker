@@ -11,7 +11,7 @@ const IncomePage = () => {
             allIncomes.map((income) => (
               <>
                 <div
-                  className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl px-[1vmax] py-[2vmax] gap-5"
+                  className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl p-[2vmax] gap-5"
                   key={income._id}
                 >
                   <div className="flex flex-col gap-5">
@@ -22,7 +22,9 @@ const IncomePage = () => {
                       {income.description}
                     </div>
                   </div>
-                  <button className="bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">Know More</button>
+                  <button className="bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">
+                    Know More
+                  </button>
                 </div>
               </>
             ))}
