@@ -14,13 +14,14 @@ import { useNavigate } from "react-router-dom";
 const MenuBar = ({ setBtnClick }) => {
   const [icon, setIcon] = useState("dashBoardIcon");
   const navigate = useNavigate();
-  
+
   const handleActivebtn = (iconName) => {
     setIcon(iconName);
     setBtnClick(iconName);
   };
 
   const handleSignOut = () => {
+    handleActivebtn("signOut");
     localStorage.removeItem("authTokenExpiration");
     localStorage.removeItem("authToken");
     navigate("/user_login");
@@ -91,8 +92,17 @@ const MenuBar = ({ setBtnClick }) => {
               </div>
             </div>
           </div>
-          <div className="h-[30%] w-full flex justify-center items-end py-[2vmax]">
-            <button onClick={handleSignOut}>{signOuticon}</button>
+          <div className="h-[30%] w-[95%] flex justify-center items-end py-[2vmax]">
+            <div className="w-full h-[30%] flex justify-center items-center relative overflow-hidden">
+              <div className={`${icon == "signOut" ? "active" : ""}`}>
+                <button
+                  onClick={handleSignOut}
+                  className="relative z-[2] hover:scale-90 transition-all duration-300 hover:transition-all hover:duration-300"
+                >
+                  {signOuticon}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
