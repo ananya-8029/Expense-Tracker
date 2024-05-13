@@ -13,7 +13,7 @@ const fetchuser = require("../middleswares/fetchUser.js");
 const router = require("express").Router();
 
 router.post("/addincome", fetchuser, addincome);
-router.get("/getincomes", getincomes);
+router.get("/getincomes", fetchuser, getincomes);
 router.delete("/deleteincome/:id", deleteincome);
 router.post("/addexpense", addexpense);
 router.get("/getexpenses", getexpenses);
