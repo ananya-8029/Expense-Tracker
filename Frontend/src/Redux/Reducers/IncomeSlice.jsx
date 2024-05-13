@@ -7,11 +7,11 @@ export const incomeSlice = createSlice({
   reducers: {
     addIncome: (state, action) => {
       const income = action.payload;
-      state.incomes.push(income);
+      state.incomes = [...state.incomes,income]
+      // console.log(state.incomes)
     },
   },
 });
 
 export const { addIncome } = incomeSlice.actions;
-
 export const incomeReducer = incomeSlice.reducer;

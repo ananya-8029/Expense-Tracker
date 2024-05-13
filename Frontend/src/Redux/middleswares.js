@@ -2,7 +2,7 @@ import { addIncome } from "./Reducers/IncomeSlice";
 import axios from "axios";
 
 // fetching incomes
-export const fetchIncome = async () => {
+export const fetchIncome = async (dispatch) => {
   try {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
@@ -22,7 +22,8 @@ export const fetchIncome = async () => {
     }
 
     const incomes = response.data;
-    console.log(incomes)
+    dispatch(addIncome(incomes))
+    
   } catch (error) {
     console.log(error);
   }

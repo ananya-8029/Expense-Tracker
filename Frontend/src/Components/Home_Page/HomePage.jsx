@@ -27,7 +27,7 @@ const HomePage = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const authToken = localStorage.getItem("authToken");
-      // console.log(authToken)
+      
       if (!authToken) {
         navigate("/user_login");
       }
