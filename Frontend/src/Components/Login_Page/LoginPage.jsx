@@ -5,9 +5,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Audio } from "react-loader-spinner";
 import { emailIcon, passwordIcon } from "../../utils/Icons";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/Reducers/UsersSlice";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,12 +24,13 @@ const LoginPage = () => {
         { email, password }
       );
       if (response.statusText === "OK") {
-        const { authToken } = response.data;
+        const { authToken, user } = response.data;
 
         const expirationTime = new Date().getTime() + 60 * 60 * 1000; // 1 hour in milliseconds
 
         localStorage.setItem("authToken", authToken);
         localStorage.setItem("authTokenExpiration", expirationTime);
+        dispatch(setUser(user));
 
         axios.defaults.headers.common["auth-token"] = authToken;
         setIsLoading(true);
