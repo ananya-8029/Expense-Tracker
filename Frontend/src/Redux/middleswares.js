@@ -16,12 +16,12 @@ export const fetchIncome = async () => {
         },
       }
     );
-    if (response.status !== "OK") {
+    if (response.statusText !== "OK") {
       console.error("Failed to fetch all incomes: ", response.status);
       return;
     }
 
-    const incomes = response.json();
+    const incomes = response.data;
     console.log(incomes)
   } catch (error) {
     console.log(error);
