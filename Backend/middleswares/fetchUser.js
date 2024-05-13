@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-export const fetchuser = async (req, res, next) => {
+const fetchuser = (req, res, next) => {
   try {
     const token = req.header("auth-token");
     if (!token) {
@@ -15,3 +15,5 @@ export const fetchuser = async (req, res, next) => {
     res.status(401).json({ message: "Not a valid token! " });
   }
 };
+
+module.exports = fetchuser;
