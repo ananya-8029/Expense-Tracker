@@ -2,9 +2,11 @@
 import { useNavigate } from "react-router-dom";
 import "../Login_Page/LoginPage.css";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Audio } from "react-loader-spinner";
 import { emailIcon, passwordIcon } from "../../utils/Icons";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/Reducers/UsersSlice";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +14,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMessage, setErrMessage] = useState(null);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +24,15 @@ const LoginPage = () => {
         { email, password }
       );
       if (response.statusText === "OK") {
+        const { authToken, user } = response.data;
+        dispatch(setUser(user));
+
+        const expirationTime = new Date().getTime() + 60 * 60 * 1000; // 1 hour in milliseconds
+
+        localStorage.setItem("authToken", authToken);
+        localStorage.setItem("authTokenExpiration", expirationTime);
+
+        axios.defaults.headers.common["auth-token"] = authToken;
         setIsLoading(true);
         setTimeout(() => {
           setIsLoading(false);
@@ -42,6 +54,28 @@ const LoginPage = () => {
       navigate("/new_user");
     }, 2500);
   };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    const expirationTime = localStorage.getItem("authTokenExpiration");
+
+    const expirationDate = new Date(expirationTime);
+
+    if (!authToken) {
+      handleSubmit();
+    } else {
+      if (new Date().getTime() > parseInt(expirationDate, 10)) {
+        localStorage.removeItem("authTokenExpiration");
+        localStorage.removeItem("authToken");
+        handleSubmit();
+      } else {
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("/home_page");
+        }, 2500);
+      }
+    }
+  });
   return (
     <>
       {isLoading && (
