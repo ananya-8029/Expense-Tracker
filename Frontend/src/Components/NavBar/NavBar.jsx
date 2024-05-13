@@ -1,11 +1,15 @@
 import "../NavBar/NavBar.css";
 import { dropDownList, searchIcon } from "../../utils/Icons";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const NavBar = ({ btnClick }) => {
   const [header, setHeader] = useState("Dashboard");
+  const navigate = useNavigate();
   const [isDropdown, setIsDropdown] = useState(false);
+  const userData = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
     switch (btnClick) {
@@ -29,6 +33,12 @@ const NavBar = ({ btnClick }) => {
 
   const handleDropDown = () => {
     setIsDropdown(true);
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("authTokenExpiration");
+    localStorage.removeItem("authToken");
+    navigate("/user_login");
   };
 
   return (
@@ -59,10 +69,10 @@ const NavBar = ({ btnClick }) => {
             </div>
             <div className="profile flex-1 flex flex-col justify-center items-center">
               <span className="text-[#454242] text-[1.1vmax] font-medium">
-                User Name
+                {userData.username}
               </span>
               <span className="text-[#929090] text-[0.8vmax] font-light">
-                abc@gmail.com
+                {userData.email}
               </span>
             </div>
             <button
@@ -76,6 +86,9 @@ const NavBar = ({ btnClick }) => {
               </span>
             </button>
           </div>
+        <button className="bg-red-400" onClick={handleSignOut}>
+          Sign out
+        </button>
         </div>
       </div>
     </>

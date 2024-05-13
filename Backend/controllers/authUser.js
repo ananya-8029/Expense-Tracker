@@ -56,3 +56,12 @@ exports.login = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+exports.getUser = async (req, res) => {
+  try {
+    const user = await UserSchema.findById(req.user.id);
+    res.status(200).json({ user: user });
+  } catch (error) {
+    res.status(500).json({ message: "Not a valid user! " });
+  }
+};

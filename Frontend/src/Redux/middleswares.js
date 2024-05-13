@@ -1,5 +1,31 @@
 import { addIncome } from "./Reducers/IncomeSlice";
 import axios from "axios";
+import { setUser } from "./Reducers/UsersSlice";
+
+// fetch user
+export const fetchUser = async (dispatch) => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      return;
+    }
+    const response = await axios.get("http://localhost:8000/api/user/getUser", {
+      headers: {
+        "auth-token": authToken,
+      },
+    });
+    if (response.statusText !== "OK") {
+      console.error("Failed to fetch all incomes: ", response.status);
+      return;
+    }
+
+    const user = response.data;
+    dispatch(setUser(user.user));
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // fetching incomes
 export const fetchIncome = async (dispatch) => {
@@ -22,8 +48,7 @@ export const fetchIncome = async (dispatch) => {
     }
 
     const incomes = response.data;
-    dispatch(addIncome(incomes))
-    
+    dispatch(addIncome(incomes));
   } catch (error) {
     console.log(error);
   }
