@@ -9,10 +9,13 @@ import {
 } from "../../utils/Icons";
 import "../Menu_Bar/MenuBar.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../../Redux/Reducers/UsersSlice";
 
 // eslint-disable-next-line react/prop-types
 const MenuBar = ({ setBtnClick }) => {
   const [icon, setIcon] = useState("dashBoardIcon");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleActivebtn = (iconName) => {
@@ -24,6 +27,7 @@ const MenuBar = ({ setBtnClick }) => {
     handleActivebtn("signOut");
     localStorage.removeItem("authTokenExpiration");
     localStorage.removeItem("authToken");
+    dispatch(clearUser());
     navigate("/user_login");
   };
 

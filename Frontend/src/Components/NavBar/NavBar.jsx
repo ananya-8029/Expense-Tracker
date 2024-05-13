@@ -15,13 +15,13 @@ const NavBar = ({ btnClick }) => {
         setHeader("Dashboard");
         break;
       case "transactionIcon":
-        setHeader("Transactions");
+        setHeader("Transaction Logs");
         break;
       case "viewIncomeIcon":
-        setHeader("Income");
+        setHeader("Income Insights");
         break;
       case "viewExpensesIcon":
-        setHeader("Expenses");
+        setHeader("Spending Summary");
         break;
       default:
         setHeader("Dashboard");

@@ -20,7 +20,7 @@ export const fetchUser = async (dispatch) => {
     }
 
     const user = response.data;
-    dispatch(setUser(user.user));
+    await dispatch(setUser(user.user));
     return;
   } catch (error) {
     console.log(error);
@@ -48,7 +48,7 @@ export const fetchIncome = async (dispatch) => {
     }
 
     const incomes = response.data;
-    dispatch(addIncome(incomes));
+    await dispatch(addIncome(incomes));
   } catch (error) {
     console.log(error);
   }
