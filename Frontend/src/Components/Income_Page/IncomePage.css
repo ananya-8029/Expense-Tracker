@@ -1,10 +1,29 @@
 .income-content {
   font-family: "Poppins", sans-serif;
   box-shadow: 3px 4px 7px 4px #eeeeee;
+  overflow: hidden;
+  position: relative;
+  z-index: 20;
 }
 
-.income-content::after{
+.income-content::after {
   content: "";
   height: 15vmax;
-  width: 15vmax;
+  width: 100%;
+  background-color: #624FA4;
+  position: absolute;
+  top: 0;
+  transition: all 0.5s;
+  z-index: -20;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  bottom: 0;
+  left: 100%;
+  top: 50%;
+}
+
+.income-content:hover:after {
+  transform: scale(2);
+  left: 0;
+  top: 0;
 }

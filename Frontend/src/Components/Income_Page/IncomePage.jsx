@@ -32,7 +32,7 @@ const IncomePage = () => {
     }
   }, [btnClick]);
 
-  useEffect(()=>{})
+  useEffect(() => {});
   return (
     <>
       <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
@@ -44,11 +44,8 @@ const IncomePage = () => {
           <div className="h-[60%] w-full  flex pt-[5vmax] pl-[5vmax]">
             {allIncomes &&
               allIncomes.map((income) => (
-                <>
-                  <div
-                    className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl py-[1.5vmax] px-[2vmax] gap-3"
-                    key={income._id}
-                  >
+                <div key={income._id}>
+                  <div className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl py-[1.5vmax] px-[2vmax] gap-3">
                     <div className="flex flex-col gap-1">
                       <div className="text-[1.3vmax] font-medium h-[4vmax]">
                         {income.title}
@@ -57,14 +54,15 @@ const IncomePage = () => {
                         {income.description}
                       </div>
                       <span className="text-[#624FA4] text-[0.7vmax] text-[] font-semibold">
-                        {moment(income.date).format("MMMM Do YYYY, h:mm:ss a")}
+                        Timestamp:&nbsp;
+                        {moment(income.date).format("YYYY-MM-DD")}
                       </span>
                     </div>
                     <button className="bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">
                       Know More
                     </button>
                   </div>
-                </>
+                </div>
               ))}
           </div>
           <div className=" h-[40%] w-full"></div>
