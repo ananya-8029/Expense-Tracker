@@ -13,8 +13,9 @@ import { useDispatch } from "react-redux";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
 
 // eslint-disable-next-line react/prop-types
-const MenuBar = ({ setBtnClick }) => {
-  const [icon, setIcon] = useState("dashBoardIcon");
+const MenuBar = ({ setBtnClick, btnClick }) => {
+  console.log(btnClick);
+  const [icon, setIcon] = useState(btnClick ? btnClick : "");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -35,7 +35,7 @@ const IncomePage = () => {
         <div className="flex justify-end">
           <NavBar btnClick={btnClick} />
         </div>
-        <MenuBar setBtnClick={setBtnClick} />
+        <MenuBar setBtnClick={setBtnClick} btnClick={btnClick}/>
         <div className="h-screen w-full">
           <div className="h-[60%] w-full  flex pt-[5vmax] pl-[5vmax]">
             {allIncomes &&

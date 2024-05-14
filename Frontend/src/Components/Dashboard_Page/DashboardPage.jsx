@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 import MenuBar from "../Menu_Bar/MenuBar";
 import NavBar from "../NavBar/NavBar";
@@ -33,7 +34,7 @@ const DashboardPage = () => {
         <div className="flex justify-end">
           <NavBar btnClick={btnClick} />
         </div>
-        <MenuBar setBtnClick={setBtnClick} />
+        <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
         <div className="h-screen w-full"></div>
       </div>
     </>
