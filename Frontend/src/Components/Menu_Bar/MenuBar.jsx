@@ -12,10 +12,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
+import { Audio } from "react-loader-spinner";
 
 // eslint-disable-next-line react/prop-types
 const MenuBar = ({ setBtnClick, btnClick }) => {
   const [icon, setIcon] = useState(btnClick ? btnClick : "");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,16 +27,25 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
   };
 
   const handleSignOut = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/user_login");
+    }, 2500);
     handleActivebtn("signOut");
     localStorage.removeItem("authTokenExpiration");
     localStorage.removeItem("authToken");
     dispatch(clearUser());
-    dispatch(clearIncome())
-    navigate("/user_login");
+    dispatch(clearIncome());
   };
 
   return (
     <>
+      {isLoading && (
+        <div className="absolute top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <Audio type="TailSpin" color="#ffffff" height={80} width={80} />
+        </div>
+      )}
       <div className="h-screen w-[5vmax] flex justify-center items-center fixed">
         <div className="h-[97%] w-[95%] bg-white rounded-xl mx-[0.5vmax] flex items-center flex-col">
           <div className="h-[25%] w-full flex justify-center items-center flex-col gap-10">

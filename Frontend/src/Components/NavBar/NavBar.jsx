@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const NavBar = ({ btnClick }) => {
   const [header, setHeader] = useState("Dashboard");
   const [isDropdown, setIsDropdown] = useState(false);
-  const userData = useSelector((state) => state.userReducer.user);
+  const userData = useSelector((state) => (state.userReducer ?state.userReducer.user:{}));
 
   useEffect(() => {
     switch (btnClick) {

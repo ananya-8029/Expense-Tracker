@@ -18,9 +18,8 @@ const LoginPage = () => {
   const [errMessage, setErrMessage] = useState(null);
 
   const handleSubmit = async (e) => {
-    console.log("handleSubmit called with event:", e);
-    e.preventDefault();
     try {
+      e.preventDefault();
       const response = await axios.post(
         "http://localhost:8000/api/auth/login",
         { email, password }
@@ -46,7 +45,7 @@ const LoginPage = () => {
       setPassword("");
       setErrMessage(null);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (error.response) setErrMessage(error.response.data.message);
     }
   };
