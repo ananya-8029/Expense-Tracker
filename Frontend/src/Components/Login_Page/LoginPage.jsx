@@ -7,6 +7,7 @@ import { Audio } from "react-loader-spinner";
 import { emailIcon, passwordIcon } from "../../utils/Icons";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../Redux/Reducers/UsersSlice";
+import { fetchIncome } from "../../Redux/middleswares";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,7 @@ const LoginPage = () => {
   const [errMessage, setErrMessage] = useState(null);
 
   const handleSubmit = async (e) => {
+    console.log("handleSubmit called with event:", e);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -31,6 +33,7 @@ const LoginPage = () => {
         localStorage.setItem("authToken", authToken);
         localStorage.setItem("authTokenExpiration", expirationTime);
         dispatch(setUser(user));
+        fetchIncome(dispatch);
 
         axios.defaults.headers.common["auth-token"] = authToken;
         setIsLoading(true);
@@ -43,7 +46,8 @@ const LoginPage = () => {
       setPassword("");
       setErrMessage(null);
     } catch (error) {
-      setErrMessage(error.response.data.message);
+      console.log(error);
+      if (error.response) setErrMessage(error.response.data.message);
     }
   };
 

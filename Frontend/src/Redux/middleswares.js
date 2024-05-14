@@ -29,6 +29,7 @@ export const fetchUser = async (dispatch) => {
 
 // fetching incomes
 export const fetchIncome = async (dispatch) => {
+  console.log("From fetchIncome middleware")
   try {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
