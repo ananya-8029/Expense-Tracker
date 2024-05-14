@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Audio } from "react-loader-spinner";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { checkIcon } from "../../utils/Icons";
 
 const IntroPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,55 +52,19 @@ const IntroPage = () => {
             inflow and outflow.
             <div className="flex flex-col gap-2 py-[1.5vmax] font-medium text-[#2c2546] text-[1vmax]">
               <span className="flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  fill="rgba(123,101,196,1)"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path>
-                </svg>
+                {checkIcon}
                 Budget Management
               </span>
               <span className="flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  fill="rgba(123,101,196,1)"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path>
-                </svg>
+                {checkIcon}
                 Expense Analysis
               </span>
               <span className="flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  fill="rgba(123,101,196,1)"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path>
-                </svg>
+                {checkIcon}
                 Savings Tracking
               </span>
               <span className="flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  fill="rgba(123,101,196,1)"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path>
-                </svg>
+                {checkIcon}
                 Smart Spending
               </span>
             </div>

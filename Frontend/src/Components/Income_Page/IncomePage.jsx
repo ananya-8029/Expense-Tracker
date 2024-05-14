@@ -4,11 +4,13 @@ import NavBar from "../NavBar/NavBar";
 import MenuBar from "../Menu_Bar/MenuBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const IncomePage = () => {
   const allIncomes = useSelector((state) => state.incomeReducer.incomes[0]);
   const [btnClick, setBtnClick] = useState("viewIncomeIcon");
   const navigate = useNavigate();
+  // console.log(allIncomes)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getRoute = () => {
@@ -29,29 +31,34 @@ const IncomePage = () => {
       navigate(getRoute());
     }
   }, [btnClick]);
+
+  useEffect(()=>{})
   return (
     <>
       <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
         <div className="flex justify-end">
           <NavBar btnClick={btnClick} />
         </div>
-        <MenuBar setBtnClick={setBtnClick} btnClick={btnClick}/>
+        <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
         <div className="h-screen w-full">
           <div className="h-[60%] w-full  flex pt-[5vmax] pl-[5vmax]">
             {allIncomes &&
               allIncomes.map((income) => (
                 <>
                   <div
-                    className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl p-[2vmax] gap-5"
+                    className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl py-[1.5vmax] px-[2vmax] gap-3"
                     key={income._id}
                   >
-                    <div className="flex flex-col gap-5">
-                      <div className="text-[1.4vmax] font-medium">
+                    <div className="flex flex-col gap-1">
+                      <div className="text-[1.3vmax] font-medium h-[4vmax]">
                         {income.title}
                       </div>
-                      <div className="text-[0.8vmax] font-light">
+                      <div className="text-[0.8vmax] font-light h-[3vmax]">
                         {income.description}
                       </div>
+                      <span className="text-[#624FA4] text-[0.7vmax] text-[] font-semibold">
+                        {moment(income.date).format("MMMM Do YYYY, h:mm:ss a")}
+                      </span>
                     </div>
                     <button className="bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">
                       Know More

@@ -11,10 +11,10 @@ import "../Menu_Bar/MenuBar.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
+import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
 
 // eslint-disable-next-line react/prop-types
 const MenuBar = ({ setBtnClick, btnClick }) => {
-  console.log(btnClick);
   const [icon, setIcon] = useState(btnClick ? btnClick : "");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
     localStorage.removeItem("authTokenExpiration");
     localStorage.removeItem("authToken");
     dispatch(clearUser());
+    dispatch(clearIncome())
     navigate("/user_login");
   };
 
