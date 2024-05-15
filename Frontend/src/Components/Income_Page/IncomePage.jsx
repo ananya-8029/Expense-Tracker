@@ -5,6 +5,7 @@ import MenuBar from "../Menu_Bar/MenuBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { Chart } from "react-chartjs-2";
 
 const IncomePage = () => {
   const allIncomes = useSelector((state) => state.incomeReducer.incomes[0]);
@@ -53,12 +54,12 @@ const IncomePage = () => {
                       <div className="text-[0.8vmax] font-light h-[3vmax]">
                         {income.description}
                       </div>
-                      <span className="text-[#624FA4] text-[0.7vmax] text-[] font-semibold">
+                      <span className="income-content-timeStamp text-[#624FA4] text-[0.7vmax] text-[] font-semibold">
                         Timestamp:&nbsp;
                         {moment(income.date).format("YYYY-MM-DD")}
                       </span>
                     </div>
-                    <button className="bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">
+                    <button className="income-content-btn bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">
                       Know More
                     </button>
                   </div>
