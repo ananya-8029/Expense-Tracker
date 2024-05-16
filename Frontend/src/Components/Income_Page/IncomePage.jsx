@@ -5,13 +5,22 @@ import MenuBar from "../Menu_Bar/MenuBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { Chart } from "react-chartjs-2";
+import IncomeTrendsChart from "../../utils/IncomeTrendsChart";
 
 const IncomePage = () => {
   const allIncomes = useSelector((state) => state.incomeReducer.incomes[0]);
   const [btnClick, setBtnClick] = useState("viewIncomeIcon");
   const navigate = useNavigate();
-  // console.log(allIncomes)
+
+  const [incomeData, setIncomeData] = useState({
+    labels: allIncomes.map((data) => data.date),
+    datasets: [
+      {
+        label: "Users Gained",
+        data: allIncomes.map((data) => data.amount),
+      },
+    ],
+  });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getRoute = () => {
@@ -33,7 +42,6 @@ const IncomePage = () => {
     }
   }, [btnClick]);
 
-  useEffect(() => {});
   return (
     <>
       <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
@@ -66,7 +74,9 @@ const IncomePage = () => {
                 </div>
               ))}
           </div>
-          <div className=" h-[40%] w-full"></div>
+          <div className=" h-[40%] w-full">
+            <IncomeTrendsChart incomeData={incomeData} />
+          </div>
         </div>
       </div>
     </>
