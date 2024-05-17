@@ -42,7 +42,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
   return (
     <>
       {isLoading && (
-        <div className="absolute top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-50">
+        <div className="absolute top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50 z-10000">
           <Audio type="TailSpin" color="#ffffff" height={80} width={80} />
         </div>
       )}

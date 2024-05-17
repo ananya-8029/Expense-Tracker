@@ -13,11 +13,11 @@ const IncomePage = () => {
   const navigate = useNavigate();
 
   const [incomeData, setIncomeData] = useState({
-    labels: allIncomes.map((data) => data.date),
+    labels: allIncomes?.map((data) => data.date),
     datasets: [
       {
         label: "Users Gained",
-        data: allIncomes.map((data) => data.amount),
+        data: allIncomes?.map((data) => data.amount),
       },
     ],
   });
@@ -50,7 +50,7 @@ const IncomePage = () => {
         </div>
         <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
         <div className="h-screen w-full">
-          <div className="h-[60%] w-full  flex pt-[5vmax] pl-[5vmax]">
+          <div className="h-[50%] w-full  flex pt-[5vmax] pl-[5vmax]">
             {allIncomes &&
               allIncomes.map((income) => (
                 <div key={income._id}>
@@ -74,8 +74,10 @@ const IncomePage = () => {
                 </div>
               ))}
           </div>
-          <div className=" h-[40%] w-full">
-            <IncomeTrendsChart incomeData={incomeData} />
+          <div className=" h-[50%] w-full">
+            <div className="h-full w-[50%] px-[5vmax]">
+              <IncomeTrendsChart incomeData={incomeData} />
+            </div>
           </div>
         </div>
       </div>
