@@ -7,7 +7,9 @@ import { useSelector } from "react-redux";
 const NavBar = ({ btnClick }) => {
   const [header, setHeader] = useState("Dashboard");
   const [isDropdown, setIsDropdown] = useState(false);
-  const userData = useSelector((state) => (state.userReducer ?state.userReducer.user:{}));
+  const userData = useSelector((state) =>
+    state.userReducer ? state.userReducer.user : {}
+  );
 
   useEffect(() => {
     switch (btnClick) {
@@ -30,7 +32,7 @@ const NavBar = ({ btnClick }) => {
   }, [btnClick]);
 
   const handleDropDown = () => {
-    setIsDropdown(true);
+    setIsDropdown((event) => !event);
   };
 
   return (
@@ -51,7 +53,7 @@ const NavBar = ({ btnClick }) => {
               placeholder="Search for transactions, expenses etc."
             />
           </div>
-          <div className="bg-[#f7f6f6] h-[3.2vmax] w-[17%] mx-[1vmax] rounded-xl flex justify-center items-center relative">
+          <div className="bg-[#f7f6f6] h-[3.2vmax] w-[30%] mx-[1vmax] rounded-xl flex justify-center items-center relative">
             <div className="flex flex-3 h-[2.8vmax] w-[3vmax] rounded-full mx-[1vmax]">
               <img
                 className="object-fill rounded-full h-full w-full"
@@ -59,12 +61,12 @@ const NavBar = ({ btnClick }) => {
                 alt=""
               />
             </div>
-            <div className="profile flex-1 flex flex-col justify-center items-center">
+            <div className="profile font-poppins flex-1 flex flex-col justify-center items-center">
               <span className="text-[#454242] text-[1.1vmax] font-medium">
-                {userData?userData.username:""}
+                {userData ? userData.username : ""}
               </span>
               <span className="text-[#929090] text-[0.8vmax] font-light">
-                {userData?userData.email:""}
+                {userData ? userData.email : ""}
               </span>
             </div>
             <button

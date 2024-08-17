@@ -27,7 +27,7 @@ const RegisterPage = () => {
         setIsLoading(true);
         setTimeout(() => {
           setIsLoading(false);
-          navigate("/existing_user");
+          navigate("/user_login");
         }, 2500);
       }
     } catch (error) {
