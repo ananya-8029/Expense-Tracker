@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
+
 const db = async () => {
   try {
     mongoose.set("strictQuery", false);
@@ -10,5 +12,4 @@ const db = async () => {
   }
 };
 
-module.exports = { db };
-
+export default db;

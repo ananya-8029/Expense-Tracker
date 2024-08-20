@@ -1,3 +1,8 @@
+import express from "express";
+import fetchuser from "../middleswares/fetchUser.js";
+// import {addnewtransaction} from '../controllers/transactionlogs'
+const transactionrouter = express.Router();
+
 const {
   addexpense,
   getexpenses,
@@ -8,14 +13,13 @@ const {
   getincomes,
   deleteincome,
 } = require("../controllers/income");
-const fetchuser = require("../middleswares/fetchUser.js");
 
-const router = require("express").Router();
+// router.post("/addincome", fetchuser, addincome);
+// router.get("/getincomes", fetchuser, getincomes);
+// router.delete("/deleteincome/:id", deleteincome);
+// router.post("/addexpense", addexpense);
+// router.get("/getexpenses", getexpenses);
+// router.delete("/delete/:id", deleteexpense);
 
-router.post("/addincome", fetchuser, addincome);
-router.get("/getincomes", fetchuser, getincomes);
-router.delete("/deleteincome/:id", deleteincome);
-router.post("/addexpense", addexpense);
-router.get("/getexpenses", getexpenses);
-router.delete("/delete/:id", deleteexpense);
-module.exports = router;
+transactionrouter.post("/addnewtransaction", fetchuser, addnewtransaction);
+export default transactionrouter;

@@ -23,7 +23,10 @@ const NewTransactionFrom = () => {
   return (
     <>
       <div className="absolute right-0 top-0 h-full bg-white w-[30%]">
-        <form className="font-poppins h-full w-full flex flex-col justify-start items-start pt-[1.5vmax] gap-5 px-[2vmax]">
+        <form
+          encType="multipart/form-data"
+          className="font-poppins h-full w-full flex flex-col justify-start items-start pt-[1.5vmax] gap-5 px-[2vmax]"
+        >
           <div className="flex flex-col justify-around w-full">
             <label className="text-[#624FA4] font-medium text-[1.1vmax]">
               Transaction Date

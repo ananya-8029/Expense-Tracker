@@ -1,26 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import db from "./db/db.js";
+import userrouter from "./routes/auth.js";
+import transactionrouter from "./routes/transactions.js";
+
+dotenv.config();
 const app = express();
 const port = process.env.PORT;
-const { db } = require("./db/db");
-const router = require("./routes/transactions");
-// const { readdirSync, read } = require("fs");
-const fs = require("fs");
-const path = require("path");
+
+app.use('api/user',userrouter);
+app.use('api/transactions',transactionrouter)
 
 // middlewares
 app.use(express.json());
 app.use(cors());
-
-
-const routeFiles = fs.readdirSync(path.join(__dirname, "routes"));
-
-routeFiles.forEach((routeFile) => {
-  const routes = require(path.join(__dirname, "routes", routeFile));
-  app.use("/api/user", routes);
-  app.use("/api/auth", routes);
-});
 
 const server = async () => {
   await db();

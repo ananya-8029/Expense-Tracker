@@ -1,9 +1,11 @@
-const { register, login, getUser } = require("../controllers/authUser");
-const fetchuser = require("../middleswares/fetchUser");
+import fetchuser from "../middleswares/fetchUser.js";
+import { register, login, getUser } from "../controllers/authUser.js";
+import express from "express";
 
-const router = require("express").Router();
+const userrouter = express.Router();
 
-router.post("/register", register);
-router.post("/login", login);
-router.get("/getUser",fetchuser, getUser);
-module.exports = router;
+userrouter.post("/register", register);
+userrouter.post("/login", login);
+userrouter.get("/getUser", fetchuser, getUser);
+
+export default userrouter;
