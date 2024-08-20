@@ -1,6 +1,8 @@
 import UserModel from "../models/UserSchema.js";
 import dotenv from "dotenv";
+import {Request, Response} from "express"
 dotenv.config();
+
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -32,17 +34,18 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
-  const { email, password } = req.body;
+const login = async (request:Request, response) => {
+  console.log(request.body)
+  const { email, password } = request.body;
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      return res.status(500).json({ message: "Invalid User Credentials" });
+      return response.status(500).json({ message: "Invalid User Credentials" });
     }
 
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
-      return res.status(500).json({ message: "Invalid User Credentials" });
+      return response.status(500).json({ message: "Invalid User Credentials" });
     }
 
     const data = { user: { id: user.id } };

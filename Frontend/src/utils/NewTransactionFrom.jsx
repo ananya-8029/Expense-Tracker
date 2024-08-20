@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const NewTransactionFrom = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [date, setDate] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [transactionDetails, setTransactionDetails] = useState("");
+  const [category, setCategory] = useState("");
+  const [type, setType] = useState("income");
+  const [attatchFile, setAttachFile] = useState(null)
+
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+  };
 
   useEffect(() => {
     const date = new Date().toISOString().split("T")[0];
-    document.getElementById("transactionDate").value = date;
-  });
+    setDate(date);
+  }, [setDate]);
 
   useEffect(() => {
     const otherInput = document.getElementById("otherPaymentMethod");
+
+    setPaymentMethod(selectedPaymentMethod);
 
     if (selectedPaymentMethod === "Other") {
       otherInput.classList.remove("hidden");
@@ -35,6 +49,10 @@ const NewTransactionFrom = () => {
               type="date"
               className="bg-[#F7F6F6] outline-none h-[2vmax] w-[80%] rounded-l my-[0.8vmax] p-[0.8vmax] text-[#a5a3a3]"
               id="transactionDate"
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+              }}
             />
           </div>
           <div className="flex flex-col w-full">
@@ -45,6 +63,10 @@ const NewTransactionFrom = () => {
               type="number"
               className="bg-[#F7F6F6] outline-none h-[2vmax] w-[80%] rounded-l my-[0.8vmax] p-[0.8vmax] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="Enter the amount"
+              value={amount}
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
             />
           </div>
 
@@ -71,6 +93,9 @@ const NewTransactionFrom = () => {
               id="otherPaymentMethod"
               placeholder="Enter custom payment method"
               className="bg-[#F7F6F6] rounded-l outline-none h-[2vmax] w-[80%] p-[0.8vmax] hidden"
+              onChange={(e) => {
+                setPaymentMethod(e.target.value);
+              }}
             />
           </div>
 
@@ -85,6 +110,9 @@ const NewTransactionFrom = () => {
               type="text"
               className="bg-[#F7F6F6] rounded-l outline-none h-[2vmax] w-[80%] p-[0.8vmax]"
               placeholder="Enter details"
+              onChange={(e) => {
+                setTransactionDetails(e.target.value);
+              }}
             />
           </div>
 
@@ -96,7 +124,10 @@ const NewTransactionFrom = () => {
               <input
                 type="text"
                 className="bg-[#F7F6F6] rounded-l outline-none h-[2vmax] w-full p-[0.8vmax]"
-                placeholder="e.g., Income"
+                placeholder="e.g., Rent"
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-col w-[45%]">
@@ -105,11 +136,21 @@ const NewTransactionFrom = () => {
               </label>
               <div className="flex flex-col justify-center items-start">
                 <div className="flex justify-center items-center gap-3">
-                  <input type="radio" name="type" id="income" />
+                  <input
+                    type="radio"
+                    name="type"
+                    id="income"
+                    onChange={handleTypeChange}
+                  />
                   <label htmlFor="income">Income</label>
                 </div>
                 <div className="flex justify-center items-center gap-3">
-                  <input type="radio" name="type" id="expense" />
+                  <input
+                    type="radio"
+                    name="type"
+                    onChange={handleTypeChange}
+                    id="expense"
+                  />
                   <label htmlFor="expense">Expense</label>
                 </div>
               </div>
