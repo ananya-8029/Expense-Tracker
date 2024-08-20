@@ -1,4 +1,4 @@
-import UserModel from "../models/UserSchema";
+import UserModel from "../models/UserSchema.js";
 import dotenv from "dotenv";
 dotenv.config();
 
