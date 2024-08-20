@@ -37,7 +37,7 @@ const NavBar = ({ btnClick }) => {
 
   return (
     <>
-      <div className="h-[4vmax] w-[95%] flex justify-center items-center fixed z-[9999]">
+      <div className="h-[4vmax] w-[95%] flex justify-center items-center fixed z-[5000]">
         <div className="h-full w-[99%] flex justify-end items-center bg-white mt-[1.5vmax] gap-10 rounded-xl">
           <div className="w-full flex justify-start mx-[]">
             <span className="nav_header text-[2vmax] font-bold mx-[2vmax]">

@@ -1,6 +1,5 @@
 import UserModel from "../models/UserSchema.js";
 import dotenv from "dotenv";
-import {Request, Response} from "express"
 dotenv.config();
 
 
@@ -34,8 +33,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (request:Request, response) => {
-  console.log(request.body)
+const login = async (request, response) => {
   const { email, password } = request.body;
   try {
     const user = await UserModel.findOne({ email });
@@ -54,10 +52,10 @@ const login = async (request:Request, response) => {
       expiresIn: 3600,
     });
 
-    return res.status(200).json({ authToken: signinToken, user: user });
+    return response.status(200).json({ authToken: signinToken, user: user });
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json({ message: "Internal Server Error" });
+    return response.status(500).json({ message: "Internal Server Error" });
   }
 };
 

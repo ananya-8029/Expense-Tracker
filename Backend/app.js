@@ -9,12 +9,14 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-app.use('/api/auth',userrouter);
-app.use('/api/transactions',transactionrouter)
-
 // middlewares
 app.use(express.json());
 app.use(cors());
+
+app.use('/api/auth',userrouter);
+app.use('/api/transactions',transactionrouter)
+
+
 
 const server = async () => {
   await db();
