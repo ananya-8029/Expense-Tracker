@@ -57,8 +57,9 @@ const NavBar = ({ btnClick }) => {
             <div className="flex flex-3 h-[2.8vmax] w-[3vmax] rounded-full mx-[1vmax]">
               <img
                 className="object-fill rounded-full h-full w-full"
-                src="https://picsum.photos/id/1/200/300"
-                alt=""
+                src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+                alt={userData?.username || "User"}
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="profile font-poppins flex-1 flex flex-col justify-center items-center">

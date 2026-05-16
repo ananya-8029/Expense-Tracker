@@ -9,7 +9,7 @@ import {
 } from "../../utils/Icons";
 import "../Menu_Bar/MenuBar.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
 import { Audio } from "react-loader-spinner";
@@ -20,6 +20,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.userReducer?.user);
 
   const handleActivebtn = (iconName) => {
     setIcon(iconName);
@@ -52,8 +53,9 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
             <div className="h-[3vmax] w-[3vmax] rounded-full">
               <img
                 className="object-fill rounded-full h-full w-full"
-                src="https://picsum.photos/id/1/200/300"
-                alt=""
+                src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+                alt={userData?.username || "User"}
+                referrerPolicy="no-referrer"
               />
             </div>
             <div className="w-[85%] h-[25%] flex justify-center items-center relative overflow-hidden">
