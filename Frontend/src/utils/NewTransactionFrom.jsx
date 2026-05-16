@@ -8,11 +8,63 @@ const NewTransactionFrom = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [transactionDetails, setTransactionDetails] = useState("");
   const [category, setCategory] = useState("");
-  const [type, setType] = useState("income");
-  const [attatchFile, setAttachFile] = useState(null);
+  const [type, setType] = useState("Income");
+  const [file, setFile] = useState(null);
 
   const handleTypeChange = (e) => {
-    setType(e.target.value);
+    setType(e.target.id);
+  };
+
+  const uploadFile = async () => {
+    try {
+      const formdata = new FormData();
+      formdata.append("file", file);
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) {
+        return;
+      }
+      const response = await axios.post(
+        "http://localhost:8000/api/transactions/addnewtransaction",
+        formdata,
+        {
+          headers: {
+            "auth-token": authToken,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const fileUrl = uploadFile();
+    try {
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/transactions/addnewtransaction",
+      //   formData
+      // );
+      // setDate("");
+      // setAmount(0);
+      // setPaymentMethod("");
+
+      console.log(fileUrl);
+      // console.log(response);
+      // setErrMessage(null);
+      // if (response.statusText === "OK") {
+      //   setIsLoading(true);
+      //   setTimeout(() => {
+      //     setIsLoading(false);
+      //     navigate("/user_login");
+      //   }, 2500);
+      // }
+    } catch (error) {
+      console.log(error.response.data.message);
+      // setErrMessage(error.response.data.message);
+    }
   };
 
   useEffect(() => {
@@ -139,19 +191,19 @@ const NewTransactionFrom = () => {
                   <input
                     type="radio"
                     name="type"
-                    id="income"
+                    id="Income"
                     onChange={handleTypeChange}
                   />
-                  <label htmlFor="income">Income</label>
+                  <label htmlFor="Income">Income</label>
                 </div>
                 <div className="flex justify-center items-center gap-3">
                   <input
                     type="radio"
                     name="type"
                     onChange={handleTypeChange}
-                    id="expense"
+                    id="Expense"
                   />
-                  <label htmlFor="expense">Expense</label>
+                  <label htmlFor="Expense">Expense</label>
                 </div>
               </div>
             </div>
@@ -163,14 +215,17 @@ const NewTransactionFrom = () => {
             </label>
             <input
               type="file"
+              name="AttachedFile"
               onChange={(e) => {
-                setAttachFile(e.target.value);
-                console.log(e.target.value)
+                setFile(e.target.files[0]);
               }}
             />
           </div>
 
-          <button className="hover:text-[#fff] py-2 px-6 after:absolute after:h-1 after:hover:h-[200%] transition-all duration-500 hover:transition-all hover:duration-500 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden z-20 after:z-[-20] after:bg-[#624FA4] after:rounded-t-full after:w-full after:bottom-0 after:left-0 text-[#372b63] absolute bottom-0 left-[40%] my-[1vmax] font-light h-[2.5vmax]">
+          <button
+            className="hover:text-[#fff] py-2 px-6 after:absolute after:h-1 after:hover:h-[200%] transition-all duration-500 hover:transition-all hover:duration-500 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden z-20 after:z-[-20] after:bg-[#624FA4] after:rounded-t-full after:w-full after:bottom-0 after:left-0 text-[#372b63] absolute bottom-0 left-[40%] my-[1vmax] font-light h-[2.5vmax]"
+            onClick={handleSubmit}
+          >
             Add
           </button>
         </form>

@@ -30,7 +30,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      navigate("/user_login");
+      navigate("/");
     }, 2500);
     handleActivebtn("signOut");
     localStorage.removeItem("authTokenExpiration");

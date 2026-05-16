@@ -4,10 +4,16 @@ import { Audio } from "react-loader-spinner";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkIcon } from "../../utils/Icons";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/Reducers/UsersSlice";
+import axios from "axios";
 
 const IntroPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const IntroAppStyle = styled.div`
     background-color: #fff;
@@ -21,12 +27,32 @@ const IntroPage = () => {
     text-shadow: -5px 7px 4px rgba(0, 0, 0, 0.5);
   `;
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await axios.post("http://localhost:8000/api/auth/google", {
+          accessToken: tokenResponse.access_token,
+        });
+        localStorage.setItem("authToken", res.data.authToken);
+        localStorage.setItem("authTokenExpiration", Date.now() + 3600 * 1000);
+        dispatch(setUser(res.data.user));
+        setIsLoading(false);
+        navigate("/home_page/dashboard");
+      } catch {
+        setIsLoading(false);
+        setError("Sign-in failed. Please try again.");
+      }
+    },
+    onError: () => {
+      setIsLoading(false);
+      setError("Google sign-in was cancelled.");
+    },
+  });
+
   const handleSubmit = () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate("/user_login");
-    }, 2500);
+    setError("");
+    googleLogin();
   };
 
   return (
@@ -75,6 +101,11 @@ const IntroPage = () => {
           >
             Get Started
           </button>
+          {error && (
+            <p className="absolute top-[65%] right-[25%] text-red-500 text-[0.8vmax]">
+              {error}
+            </p>
+          )}
           <span className="font-bold tracking-[0.5vmax] text-white absolute right-[2%] text-[5vmax] top-[-2.2vmax]">
             BUDGETBUDDY
           </span>

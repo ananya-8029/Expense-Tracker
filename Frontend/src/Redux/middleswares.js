@@ -9,15 +9,29 @@ export const fetchUser = async (dispatch) => {
     if (!authToken) {
       return;
     }
-    const response = await axios.get("http://localhost:8000/api/user/getUser", {
+    // const response = await fetch("http://localhost:8000/api/auth/getUser", {
+    //   method: "GET",
+    //   headers: {
+    //     "auth-token": authToken,
+    //   },
+    // });
+
+    const response = await axios.get("http://localhost:8000/api/auth/getUser", {
       headers: {
         "auth-token": authToken,
       },
     });
-    if (response.statusText !== "OK") {
-      console.error("Failed to fetch all incomes: ", response.status);
+
+    if (!response.statusText) {
+      console.error("Failed to fetch user: ", response);
       return;
     }
+
+    // const user = response.json().then(data=>
+    // {
+    //   console.log(data);
+    // }
+    // );
 
     const user = response.data;
     await dispatch(setUser(user.user));

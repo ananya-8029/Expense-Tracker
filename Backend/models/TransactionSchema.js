@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const TransactionSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "user",
+    },
     date: {
       type: Date,
       required: true,
@@ -16,6 +20,11 @@ const TransactionSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    paymentMethod: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     category: {
       type: String,
       required: true,
@@ -23,7 +32,7 @@ const TransactionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      default: "income",
+      default: "Income",
     },
     attachments: {
       type: String,

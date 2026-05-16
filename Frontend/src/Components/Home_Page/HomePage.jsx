@@ -25,7 +25,7 @@ const HomePage = () => {
       const authToken = localStorage.getItem("authToken");
 
       if (!authToken) {
-        navigate("/user_login");
+        navigate("/");
       } else {
         navigate(getRoute());
       }

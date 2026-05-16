@@ -13,10 +13,8 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/auth',userrouter);
-app.use('/api/transactions',transactionrouter)
-
-
+app.use("/api/auth", userrouter);
+app.use("/api/transactions", transactionrouter);
 
 const server = async () => {
   await db();

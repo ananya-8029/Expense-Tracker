@@ -2,9 +2,11 @@ import UserModel from "../models/UserSchema.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
+
+const googleClient = new OAuth2Client();
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -68,4 +70,31 @@ const getUser = async (req, res) => {
   }
 };
 
-export { getUser, login, register };
+const googleAuth = async (req, res) => {
+  const { accessToken } = req.body;
+  try {
+    const googleRes = await fetch(
+      `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`
+    );
+    const { id, email, name, picture } = await googleRes.json();
+
+    if (!id || !email) {
+      return res.status(400).json({ message: "Invalid Google token" });
+    }
+
+    let user = await UserModel.findOne({ googleId: id });
+    if (!user) {
+      user = await UserModel.create({ googleId: id, email, username: name, picture });
+    }
+
+    const data = { user: { id: user.id } };
+    const authToken = jwt.sign(data, process.env.JWT_KEY, { expiresIn: 3600 });
+
+    return res.status(200).json({ authToken, user });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Google authentication failed" });
+  }
+};
+
+export { getUser, login, register, googleAuth };
