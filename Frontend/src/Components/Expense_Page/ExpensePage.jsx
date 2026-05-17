@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import "../Expense_Page/ExpensePage.css";
 import MenuBar from "../Menu_Bar/MenuBar";
 import NavBar from "../NavBar/NavBar";
 import { useState, useEffect } from "react";
@@ -24,6 +25,7 @@ const ExpensePage = () => {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [error, setError] = useState("");
+  const [editingId, setEditingId] = useState(null);
 
   const chartData = {
     labels: [...allExpenses].reverse().map((d) => moment(d.date).format("DD MMM")),
@@ -49,29 +51,54 @@ const ExpensePage = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchExpense);
+  }, []);
+
+  useEffect(() => {
     if (btnClick) navigate(getRoute());
   }, [btnClick]);
+
+  const resetForm = () => {
+    setTitle(""); setAmount(""); setCategory(""); setDescription("");
+    setDate(new Date().toISOString().split("T")[0]);
+    setError(""); setEditingId(null); setShowForm(false);
+  };
+
+  const handleEditClick = (expense) => {
+    setEditingId(expense._id);
+    setTitle(expense.title);
+    setAmount(String(expense.amount));
+    setCategory(expense.category);
+    setDescription(expense.description);
+    setDate(new Date(expense.date).toISOString().split("T")[0]);
+    setError("");
+    setShowForm(true);
+  };
 
   const handleAddExpense = async (e) => {
     e.preventDefault();
     if (!title || !amount || !category || !description || !date) {
-      setError("All fields are required!");
-      return;
+      setError("All fields are required!"); return;
     }
     const authToken = localStorage.getItem("authToken");
     try {
-      await axios.post(
-        "http://localhost:8000/api/transactions/addexpense",
-        { title, amount: Number(amount), category, description, date },
-        { headers: { "auth-token": authToken } }
-      );
+      if (editingId) {
+        await axios.put(
+          `http://localhost:8000/api/transactions/updateexpense/${editingId}`,
+          { title, amount: Number(amount), category, description, date },
+          { headers: { "auth-token": authToken } }
+        );
+      } else {
+        await axios.post(
+          "http://localhost:8000/api/transactions/addexpense",
+          { title, amount: Number(amount), category, description, date },
+          { headers: { "auth-token": authToken } }
+        );
+      }
       dispatch(fetchExpense);
-      setShowForm(false);
-      setTitle(""); setAmount(""); setCategory(""); setDescription("");
-      setDate(new Date().toISOString().split("T")[0]);
-      setError("");
+      resetForm();
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to add expense.");
+      setError(err.response?.data?.message || "Failed to save expense.");
     }
   };
 
@@ -101,7 +128,7 @@ const ExpensePage = () => {
           <div className="flex justify-between items-center px-[2vmax] pt-[1.5vmax] pb-[1vmax]">
             <h2 className="text-[1.3vmax] font-semibold text-[#372b63]">Expense Records</h2>
             <button
-              onClick={() => setShowForm(!showForm)}
+              onClick={() => showForm ? resetForm() : setShowForm(true)}
               className="bg-red-400 text-white px-4 py-2 rounded-lg text-[0.85vmax] hover:bg-red-500 transition-colors"
             >
               {showForm ? "✕ Close" : "+ Add Expense"}
@@ -110,16 +137,25 @@ const ExpensePage = () => {
 
           {/* Main area */}
           <div className={`h-[calc(100%-4vmax)] transition-all duration-300 ${showForm ? "w-[70%]" : "w-full"}`}>
-            <div className="h-[50%] flex flex-wrap pl-[2vmax] overflow-y-auto gap-1 content-start pt-[0.5vmax]">
+            <div className="h-full flex flex-wrap pl-[2vmax] overflow-y-auto gap-1 content-start pt-[0.5vmax]">
               {allExpenses.length === 0 ? (
                 <p className="text-[#929090] text-[0.9vmax] mt-4 pl-2">No expense records yet. Add your first one!</p>
               ) : (
                 allExpenses.map((expense) => (
-                  <div key={expense._id} className="bg-white flex flex-col justify-between items-start m-[0.4vmax] w-[14vmax] h-[13vmax] rounded-xl py-[1.2vmax] px-[1.5vmax]">
+                  <div key={expense._id} className="expense-content relative bg-white flex flex-col justify-between items-start m-[0.4vmax] w-[14vmax] h-[13vmax] rounded-xl py-[1.2vmax] px-[1.5vmax]">
+                    <button
+                      onClick={() => handleEditClick(expense)}
+                      className="absolute top-[0.6vmax] right-[0.6vmax] w-[1.6vmax] h-[1.6vmax] flex items-center justify-center rounded-md bg-red-50 text-red-400 hover:bg-red-100 transition-colors z-10"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[0.75vmax] h-[0.75vmax]">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                    </button>
                     <div className="flex flex-col gap-1 w-full">
-                      <div className="text-[1vmax] font-semibold truncate">{expense.title}</div>
+                      <div className="text-[1vmax] font-semibold truncate pr-[2vmax]">{expense.title}</div>
                       <div className="text-[0.75vmax] font-light text-[#929090] truncate">{expense.description}</div>
-                      <div className="text-[1.1vmax] font-bold text-red-400">₹{expense.amount.toLocaleString()}</div>
+                      <div className="expense-amount text-[1.1vmax] font-bold text-red-400">₹{expense.amount.toLocaleString()}</div>
                       <span className="text-red-300 text-[0.65vmax] font-medium">
                         {moment(expense.date).format("DD MMM YYYY")}
                       </span>
@@ -139,9 +175,6 @@ const ExpensePage = () => {
                 ))
               )}
             </div>
-            <div className="h-[50%] px-[2vmax] py-[1vmax]">
-              <Bar data={chartData} />
-            </div>
           </div>
 
           {/* Click-outside overlay */}
@@ -160,7 +193,7 @@ const ExpensePage = () => {
                 className="h-full flex flex-col pt-[2vmax] px-[2vmax] gap-4"
               >
                 <div className="flex justify-between items-center">
-                  <h3 className="text-[1.1vmax] font-semibold text-[#372b63]">Add Expense</h3>
+                  <h3 className="text-[1.1vmax] font-semibold text-[#372b63]">{editingId ? "Edit Expense" : "Add Expense"}</h3>
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
@@ -200,7 +233,7 @@ const ExpensePage = () => {
                   type="submit"
                   className="bg-red-400 text-white rounded-lg py-[0.8vmax] text-[0.9vmax] hover:bg-red-500 transition-colors"
                 >
-                  Save Expense
+                  {editingId ? "Update Expense" : "Save Expense"}
                 </button>
               </form>
             </div>

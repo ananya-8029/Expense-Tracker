@@ -1,8 +1,8 @@
 import express from "express";
 import fetchuser from "../middleswares/fetchUser.js";
 import { addnewtransaction, gettransactions, deletetransaction } from "../controllers/transactionlogs.js";
-import { addincome, getincomes, deleteincome } from "../controllers/income.js";
-import { addexpense, getexpenses, deleteexpense } from "../controllers/expense.js";
+import { addincome, getincomes, deleteincome, updateincome } from "../controllers/income.js";
+import { addexpense, getexpenses, deleteexpense, updateexpense } from "../controllers/expense.js";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
@@ -34,11 +34,13 @@ const transactionrouter = express.Router();
 transactionrouter.post("/addincome", fetchuser, addincome);
 transactionrouter.get("/getincomes", fetchuser, getincomes);
 transactionrouter.delete("/deleteincome/:id", fetchuser, deleteincome);
+transactionrouter.put("/updateincome/:id", fetchuser, updateincome);
 
 // Expense routes
 transactionrouter.post("/addexpense", fetchuser, addexpense);
 transactionrouter.get("/getexpenses", fetchuser, getexpenses);
 transactionrouter.delete("/deleteexpense/:id", fetchuser, deleteexpense);
+transactionrouter.put("/updateexpense/:id", fetchuser, updateexpense);
 
 // Transaction log routes
 transactionrouter.post("/addnewtransaction", fetchuser, upload.single("file"), addnewtransaction);
