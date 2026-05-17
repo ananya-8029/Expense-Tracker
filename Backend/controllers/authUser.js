@@ -105,4 +105,20 @@ const googleAuth = async (req, res) => {
   }
 };
 
-export { getUser, login, register, googleAuth };
+const updateProfilePhoto = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: "No file uploaded." });
+    const pictureUrl = `http://localhost:8000/uploads/profile-photos/${req.file.filename}`;
+    const user = await UserModel.findByIdAndUpdate(
+      req.user.id,
+      { picture: pictureUrl },
+      { new: true }
+    );
+    return res.status(200).json({ picture: user.picture });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Failed to update photo." });
+  }
+};
+
+export { getUser, login, register, googleAuth, updateProfilePhoto };

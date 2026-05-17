@@ -7,6 +7,8 @@ import IncomePage from "./Components/Income_Page/IncomePage";
 import ExpensePage from "./Components/Expense_Page/ExpensePage";
 import AdminPage from "./Components/Admin_Page/AdminPage";
 import UserHomePage from "./Components/Home_Page/UserHomePage";
+import ProfilePage from "./Components/Profile_Page/ProfilePage";
+import SettingsPage from "./Components/Settings_Page/SettingsPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/home_page/incomes" element={<IncomePage />} />
           <Route path="/home_page/expenses" element={<ExpensePage />} />
           <Route path="/admin/dashboard" element={<AdminPage />} />
+          <Route path="/home_page/profile" element={<ProfilePage />} />
+          <Route path="/home_page/settings" element={<SettingsPage />} />
         </Routes>
       </Router>
     </>
