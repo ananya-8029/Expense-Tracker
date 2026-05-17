@@ -38,7 +38,7 @@ const IntroPage = () => {
         dispatch(setUser(res.data.user));
         setIsLoading(false);
         const role = res.data.user?.role;
-        navigate(role === "admin" ? "/admin/dashboard" : "/home_page/dashboard");
+        navigate(role === "admin" ? "/admin/dashboard" : "/home_page/home");
       } catch {
         setIsLoading(false);
         setError("Sign-in failed. Please try again.");
