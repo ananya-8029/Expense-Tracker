@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
+import { clearExpense } from "../../Redux/Reducers/ExpenseSlice";
 import { Audio } from "react-loader-spinner";
 
 // eslint-disable-next-line react/prop-types
@@ -38,6 +39,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
     localStorage.removeItem("authToken");
     dispatch(clearUser());
     dispatch(clearIncome());
+    dispatch(clearExpense());
   };
 
   return (

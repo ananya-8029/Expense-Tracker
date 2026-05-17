@@ -1,76 +1,48 @@
 import express from "express";
 import fetchuser from "../middleswares/fetchUser.js";
-import { addnewtransaction } from "../controllers/transactionlogs.js";
+import { addnewtransaction, gettransactions, deletetransaction } from "../controllers/transactionlogs.js";
+import { addincome, getincomes, deleteincome } from "../controllers/income.js";
+import { addexpense, getexpenses, deleteexpense } from "../controllers/expense.js";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-// Determine the directory of the current module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Define the path to the transactionProofs directory
-const dir = path.join(__dirname, 'transactionProofs');
+const dir = path.join(__dirname, "../transactionProofs");
 
-// Log the current directory and the transactionProofs directory path
-// console.log('Current directory:', __dirname);
-// console.log('Transaction proofs directory path:', dir);
-
-// Ensure the directory exists
 if (!fs.existsSync(dir)) {
-  console.log('Directory does not exist. Creating directory...');
   fs.mkdirSync(dir, { recursive: true });
-} else {
-  console.log('Directory already exists.');
 }
-
-// Further check to confirm directory creation
-fs.access(dir, fs.constants.F_OK, (err) => {
-  if (err) {
-    console.error('Directory could not be accessed:', err.message);
-  } else {
-    console.log('Directory is accessible.');
-  }
-});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./transactionProofs");
+    cb(null, dir);
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, Date.now() + file.originalname);
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
 const upload = multer({ storage });
 const transactionrouter = express.Router();
 
-// const {
-//   addexpense,
-//   getexpenses,
-//   deleteexpense,
-// } = require("../controllers/expense");
-// const {
-//   addincome,
-//   getincomes,
-//   deleteincome,
-// } = require("../controllers/income");
+// Income routes
+transactionrouter.post("/addincome", fetchuser, addincome);
+transactionrouter.get("/getincomes", fetchuser, getincomes);
+transactionrouter.delete("/deleteincome/:id", fetchuser, deleteincome);
 
-// router.post("/addincome", fetchuser, addincome);
-// router.get("/getincomes", fetchuser, getincomes);
-// router.delete("/deleteincome/:id", deleteincome);
-// router.post("/addexpense", addexpense);
-// router.get("/getexpenses", getexpenses);
-// router.delete("/delete/:id", deleteexpense);
+// Expense routes
+transactionrouter.post("/addexpense", fetchuser, addexpense);
+transactionrouter.get("/getexpenses", fetchuser, getexpenses);
+transactionrouter.delete("/deleteexpense/:id", fetchuser, deleteexpense);
 
-transactionrouter.post(
-  "/addnewtransaction",
-  fetchuser,
-  upload.single("file"),
-  addnewtransaction
-);
+// Transaction log routes
+transactionrouter.post("/addnewtransaction", fetchuser, upload.single("file"), addnewtransaction);
+transactionrouter.get("/gettransactions", fetchuser, gettransactions);
+transactionrouter.delete("/deletetransaction/:id", fetchuser, deletetransaction);
+
 export default transactionrouter;

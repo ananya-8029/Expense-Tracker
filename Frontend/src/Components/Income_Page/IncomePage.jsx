@@ -1,87 +1,192 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "../Income_Page/IncomePage.css";
 import NavBar from "../NavBar/NavBar";
 import MenuBar from "../Menu_Bar/MenuBar";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import IncomeTrendsChart from "../../utils/IncomeTrendsChart";
+import axios from "axios";
+import { fetchIncome } from "../../Redux/middleswares";
 
 const IncomePage = () => {
-  const allIncomes = useSelector((state) => state.incomeReducer.incomes[0]);
+  const allIncomes = useSelector((state) => state.incomeReducer.incomes);
+  const dispatch = useDispatch();
   const [btnClick, setBtnClick] = useState("viewIncomeIcon");
+  const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
-  const [incomeData, setIncomeData] = useState({
-    labels: allIncomes?.map((data) => data.date),
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [error, setError] = useState("");
+
+  const chartData = {
+    labels: [...allIncomes].reverse().map((d) => moment(d.date).format("DD MMM")),
     datasets: [
       {
-        label: "Users Gained",
-        data: allIncomes?.map((data) => data.amount),
+        label: "Income (₹)",
+        data: [...allIncomes].reverse().map((d) => d.amount),
+        backgroundColor: "#624FA4",
+        borderRadius: 6,
       },
     ],
-  });
+  };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getRoute = () => {
     switch (btnClick) {
-      case "dashBoardIcon":
-        return "/home_page/dashboard";
-      case "transactionIcon":
-        return "/home_page/transactions";
-      case "viewIncomeIcon":
-        return "/home_page/incomes";
-      case "viewExpensesIcon":
-        return "/home_page/expenses";
+      case "dashBoardIcon": return "/home_page/dashboard";
+      case "transactionIcon": return "/home_page/transactions";
+      case "viewIncomeIcon": return "/home_page/incomes";
+      case "viewExpensesIcon": return "/home_page/expenses";
     }
   };
 
   useEffect(() => {
-    if (btnClick) {
-      navigate(getRoute());
-    }
+    if (btnClick) navigate(getRoute());
   }, [btnClick]);
 
+  const handleAddIncome = async (e) => {
+    e.preventDefault();
+    if (!title || !amount || !category || !description || !date) {
+      setError("All fields are required!");
+      return;
+    }
+    const authToken = localStorage.getItem("authToken");
+    try {
+      await axios.post(
+        "http://localhost:8000/api/transactions/addincome",
+        { title, amount: Number(amount), category, description, date },
+        { headers: { "auth-token": authToken } }
+      );
+      dispatch(fetchIncome);
+      setShowForm(false);
+      setTitle(""); setAmount(""); setCategory(""); setDescription("");
+      setDate(new Date().toISOString().split("T")[0]);
+      setError("");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add income.");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const authToken = localStorage.getItem("authToken");
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/transactions/deleteincome/${id}`,
+        { headers: { "auth-token": authToken } }
+      );
+      dispatch(fetchIncome);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <>
-      <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
-        <div className="flex justify-end">
-          <NavBar btnClick={btnClick} />
-        </div>
-        <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
-        <div className="h-screen w-full">
-          <div className="h-[50%] w-full  flex pt-[5vmax] pl-[5vmax]">
-            {allIncomes &&
-              allIncomes.map((income) => (
-                <div key={income._id}>
-                  <div className="income-content bg-white flex flex-col justify-between items-start m-[1vmax] w-[15vmax] h-[15vmax] rounded-xl py-[1.5vmax] px-[2vmax] gap-3">
-                    <div className="flex flex-col gap-1">
-                      <div className="text-[1.3vmax] font-medium h-[4vmax]">
-                        {income.title}
-                      </div>
-                      <div className="text-[0.8vmax] font-light h-[3vmax]">
-                        {income.description}
-                      </div>
-                      <span className="income-content-timeStamp text-[#624FA4] text-[0.7vmax] text-[] font-semibold">
-                        Timestamp:&nbsp;
-                        {moment(income.date).format("YYYY-MM-DD")}
+    <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
+      <div className="flex justify-end">
+        <NavBar btnClick={btnClick} />
+      </div>
+      <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
+      <div className="h-screen w-full flex items-end justify-end">
+        <div className="h-[89%] w-[95%] relative overflow-hidden">
+
+          {/* Header row */}
+          <div className="flex justify-between items-center px-[2vmax] pt-[1.5vmax] pb-[1vmax]">
+            <h2 className="text-[1.3vmax] font-semibold text-[#372b63]">Income Records</h2>
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="bg-[#624FA4] text-white px-4 py-2 rounded-lg text-[0.85vmax] hover:bg-[#372b63] transition-colors"
+            >
+              {showForm ? "✕ Close" : "+ Add Income"}
+            </button>
+          </div>
+
+          {/* Main area — shrinks when form is open */}
+          <div className={`h-[calc(100%-4vmax)] transition-all duration-300 ${showForm ? "w-[70%]" : "w-full"}`}>
+            <div className="h-[50%] flex flex-wrap pl-[2vmax] overflow-y-auto gap-1 content-start pt-[0.5vmax]">
+              {allIncomes.length === 0 ? (
+                <p className="text-[#929090] text-[0.9vmax] mt-4 pl-2">No income records yet. Add your first one!</p>
+              ) : (
+                allIncomes.map((income) => (
+                  <div key={income._id} className="income-content bg-white flex flex-col justify-between items-start m-[0.4vmax] w-[14vmax] h-[13vmax] rounded-xl py-[1.2vmax] px-[1.5vmax]">
+                    <div className="flex flex-col gap-1 w-full">
+                      <div className="text-[1vmax] font-semibold truncate">{income.title}</div>
+                      <div className="text-[0.75vmax] font-light text-[#929090] truncate">{income.description}</div>
+                      <div className="text-[1.1vmax] font-bold text-[#624FA4]">₹{income.amount.toLocaleString()}</div>
+                      <span className="text-[#a89cd6] text-[0.65vmax] font-medium">
+                        {moment(income.date).format("DD MMM YYYY")}
                       </span>
                     </div>
-                    <button className="income-content-btn bg-[#F7F6F6] w-[7vmax] h-[2vmax] rounded-lg font-extralight text-[0.8vmax] transition-all hover:transition-all hover:scale-[0.9]">
-                      Know More
-                    </button>
+                    <div className="flex gap-2 w-full mt-1">
+                      <span className="bg-[#F7F6F6] flex-1 h-[1.8vmax] rounded-lg text-[0.65vmax] flex items-center justify-center text-[#624FA4] font-medium truncate px-1">
+                        {income.category}
+                      </span>
+                      <button
+                        onClick={() => handleDelete(income._id)}
+                        className="bg-red-50 text-red-400 h-[1.8vmax] px-2 rounded-lg text-[0.65vmax] hover:bg-red-100 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-          </div>
-          <div className=" h-[50%] w-full">
-            <div className="h-full w-[50%] px-[5vmax]">
-              <IncomeTrendsChart incomeData={incomeData} />
+                ))
+              )}
+            </div>
+            <div className="h-[50%] px-[2vmax] py-[1vmax]">
+              <IncomeTrendsChart incomeData={chartData} />
             </div>
           </div>
+
+          {/* Add Income side panel */}
+          {showForm && (
+            <div className="absolute right-0 top-0 h-full bg-white w-[30%] shadow-lg overflow-y-auto">
+              <form
+                onSubmit={handleAddIncome}
+                className="h-full flex flex-col pt-[2vmax] px-[2vmax] gap-4"
+              >
+                <h3 className="text-[1.1vmax] font-semibold text-[#372b63]">Add Income</h3>
+                {error && <p className="text-red-500 text-[0.8vmax]">{error}</p>}
+                {[
+                  { label: "Title", value: title, set: setTitle, placeholder: "e.g., Salary", type: "text" },
+                  { label: "Amount (₹)", value: amount, set: setAmount, placeholder: "0", type: "number" },
+                  { label: "Category", value: category, set: setCategory, placeholder: "e.g., Freelance", type: "text" },
+                  { label: "Description", value: description, set: setDescription, placeholder: "Brief description", type: "text" },
+                ].map(({ label, value, set, placeholder, type }) => (
+                  <div key={label} className="flex flex-col gap-1">
+                    <label className="text-[#624FA4] font-medium text-[0.85vmax]">{label}</label>
+                    <input
+                      type={type}
+                      value={value}
+                      onChange={(e) => set(e.target.value)}
+                      placeholder={placeholder}
+                      className="bg-[#F7F6F6] outline-none rounded-lg p-[0.8vmax] text-[0.85vmax] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                  </div>
+                ))}
+                <div className="flex flex-col gap-1">
+                  <label className="text-[#624FA4] font-medium text-[0.85vmax]">Date</label>
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="bg-[#F7F6F6] outline-none rounded-lg p-[0.8vmax] text-[0.85vmax] text-[#929090]"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-[#624FA4] text-white rounded-lg py-[0.8vmax] text-[0.9vmax] hover:bg-[#372b63] transition-colors"
+                >
+                  Save Income
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 const ExpenseSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "user",
+    },
     title: {
       type: String,
       required: true,
@@ -16,7 +20,7 @@ const ExpenseSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      default: "income",
+      default: "expense",
     },
     date: {
       type: Date,

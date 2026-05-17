@@ -1,68 +1,44 @@
 import { addIncome } from "./Reducers/IncomeSlice";
+import { setExpenses } from "./Reducers/ExpenseSlice";
 import axios from "axios";
 import { setUser } from "./Reducers/UsersSlice";
 
-// fetch user
 export const fetchUser = async (dispatch) => {
   try {
     const authToken = localStorage.getItem("authToken");
-    if (!authToken) {
-      return;
-    }
-    // const response = await fetch("http://localhost:8000/api/auth/getUser", {
-    //   method: "GET",
-    //   headers: {
-    //     "auth-token": authToken,
-    //   },
-    // });
-
+    if (!authToken) return;
     const response = await axios.get("http://localhost:8000/api/auth/getUser", {
-      headers: {
-        "auth-token": authToken,
-      },
+      headers: { "auth-token": authToken },
     });
-
-    if (!response.statusText) {
-      console.error("Failed to fetch user: ", response);
-      return;
-    }
-
-    // const user = response.json().then(data=>
-    // {
-    //   console.log(data);
-    // }
-    // );
-
-    const user = response.data;
-    await dispatch(setUser(user.user));
-    return;
+    dispatch(setUser(response.data.user));
   } catch (error) {
     console.log(error);
   }
 };
 
-// fetching incomes
 export const fetchIncome = async (dispatch) => {
   try {
     const authToken = localStorage.getItem("authToken");
-    if (!authToken) {
-      return;
-    }
+    if (!authToken) return;
     const response = await axios.get(
-      "http://localhost:8000/api/user/getincomes",
-      {
-        headers: {
-          "auth-token": authToken,
-        },
-      }
+      "http://localhost:8000/api/transactions/getincomes",
+      { headers: { "auth-token": authToken } }
     );
-    if (response.statusText !== "OK") {
-      console.error("Failed to fetch all incomes: ", response.status);
-      return;
-    }
+    dispatch(addIncome(response.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    const incomes = response.data;
-    await dispatch(addIncome(incomes));
+export const fetchExpense = async (dispatch) => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) return;
+    const response = await axios.get(
+      "http://localhost:8000/api/transactions/getexpenses",
+      { headers: { "auth-token": authToken } }
+    );
+    dispatch(setExpenses(response.data));
   } catch (error) {
     console.log(error);
   }

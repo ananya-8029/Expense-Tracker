@@ -6,9 +6,7 @@ export const incomeSlice = createSlice({
   initialState,
   reducers: {
     addIncome: (state, action) => {
-      const income = action.payload;
-      state.incomes = [...state.incomes, income];
-      // console.log(state.incomes)
+      state.incomes = action.payload;
     },
     clearIncome: (state) => {
       state.incomes = [];
