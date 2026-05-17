@@ -39,10 +39,12 @@ const IncomePage = () => {
 
   const getRoute = () => {
     switch (btnClick) {
-      case "dashBoardIcon": return "/home_page/dashboard";
-      case "transactionIcon": return "/home_page/transactions";
-      case "viewIncomeIcon": return "/home_page/incomes";
+      case "homeIcon":         return "/home_page/home";
+      case "dashBoardIcon":    return "/home_page/dashboard";
+      case "transactionIcon":  return "/home_page/transactions";
+      case "viewIncomeIcon":   return "/home_page/incomes";
       case "viewExpensesIcon": return "/home_page/expenses";
+      default:                 return "/home_page/dashboard";
     }
   };
 

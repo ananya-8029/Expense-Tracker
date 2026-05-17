@@ -13,6 +13,9 @@ const NavBar = ({ btnClick }) => {
 
   useEffect(() => {
     switch (btnClick) {
+      case "homeIcon":
+        setHeader("Home");
+        break;
       case "dashBoardIcon":
         setHeader("Dashboard");
         break;

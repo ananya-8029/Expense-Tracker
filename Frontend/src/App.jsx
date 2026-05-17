@@ -6,6 +6,7 @@ import DashboardPage from "./Components/Dashboard_Page/DashboardPage";
 import IncomePage from "./Components/Income_Page/IncomePage";
 import ExpensePage from "./Components/Expense_Page/ExpensePage";
 import AdminPage from "./Components/Admin_Page/AdminPage";
+import UserHomePage from "./Components/Home_Page/UserHomePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<IntroPage />} />
           <Route path="/home_page" element={<HomePage />} />
+          <Route path="/home_page/home" element={<UserHomePage />} />
           <Route path="/home_page/transactions" element={<TransactionPage />} />
           <Route path="/home_page/dashboard" element={<DashboardPage />} />
           <Route path="/home_page/incomes" element={<IncomePage />} />
