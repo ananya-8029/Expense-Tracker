@@ -18,6 +18,7 @@ const SettingsPage = () => {
 
   const handleMenuClick = (icon) => {
     setBtnClick(icon);
+    if (userData?.role === "admin") { navigate("/admin/dashboard"); return; }
     const routes = {
       homeIcon: "/home_page/home",
       dashBoardIcon: "/home_page/dashboard",
@@ -82,18 +83,30 @@ const SettingsPage = () => {
     },
   ];
 
+  const isAdmin = userData?.role === "admin";
+
   return (
     <div className="bg-[#f7f6f6] min-h-screen h-screen w-full">
-      <div className="flex justify-end">
-        <NavBar btnClick={btnClick} />
-      </div>
-      <MenuBar setBtnClick={handleMenuClick} btnClick={btnClick} />
+      {!isAdmin && (
+        <div className="flex justify-end">
+          <NavBar btnClick={btnClick} pageTitle="Settings" />
+        </div>
+      )}
+      {!isAdmin && <MenuBar setBtnClick={handleMenuClick} btnClick={btnClick} />}
 
       <div className="h-screen w-full flex items-end justify-end">
-        <div className="h-[89%] w-[95%] flex flex-col px-[2vmax] pt-[1.5vmax] pb-[1.5vmax] gap-[1.5vmax] overflow-y-auto">
+        <div className={`${isAdmin ? "h-full w-full pt-[1.5vmax]" : "h-[89%] w-[95%]"} flex flex-col px-[2vmax] pb-[1.5vmax] gap-[1.5vmax] overflow-y-auto`}>
 
           {/* Header */}
           <div>
+            {userData?.role === "admin" && (
+              <button
+                onClick={() => navigate("/admin/dashboard")}
+                className="flex items-center gap-1 text-[#624FA4] hover:text-[#372b63] text-[0.78vmax] mb-[0.6vmax] transition-colors"
+              >
+                ← Back to Admin Dashboard
+              </button>
+            )}
             <h1 className="text-[1.8vmax] font-bold text-[#372b63]">Settings</h1>
             <p className="text-[#929090] text-[0.82vmax]">Manage your account and preferences</p>
           </div>

@@ -30,7 +30,7 @@ const SignOutIcon = () => (
 );
 
 // eslint-disable-next-line react/prop-types
-const NavBar = ({ btnClick }) => {
+const NavBar = ({ btnClick, pageTitle }) => {
   const [header, setHeader] = useState("Dashboard");
   const [isDropdown, setIsDropdown] = useState(false);
   const userData = useSelector((state) => state.userReducer?.user);
@@ -39,6 +39,7 @@ const NavBar = ({ btnClick }) => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
+    if (pageTitle) { setHeader(pageTitle); return; }
     switch (btnClick) {
       case "homeIcon":        setHeader("Home"); break;
       case "dashBoardIcon":   setHeader("Dashboard"); break;
@@ -47,7 +48,7 @@ const NavBar = ({ btnClick }) => {
       case "viewExpensesIcon":setHeader("Spending Summary"); break;
       default:                setHeader("Dashboard"); break;
     }
-  }, [btnClick]);
+  }, [btnClick, pageTitle]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -115,16 +116,14 @@ const NavBar = ({ btnClick }) => {
           {isDropdown && (
             <div className="absolute top-[3.8vmax] right-0 w-[16vmax] bg-white rounded-xl shadow-xl border border-[#f0eef8] z-50 overflow-hidden">
               {/* User info header */}
-              <div className="px-[1.2vmax] py-[1vmax] border-b border-[#f0eef8]">
+              <div className="px-[1.2vmax] py-[1vmax] border-b border-[#f0eef8] flex items-center gap-[0.8vmax]">
+                <img
+                  src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+                  referrerPolicy="no-referrer"
+                  className="h-[2.2vmax] w-[2.2vmax] rounded-full object-cover flex-shrink-0"
+                  alt=""
+                />
                 <p className="text-[#372b63] text-[0.85vmax] font-semibold truncate">{userData?.username}</p>
-                <p className="text-[#929090] text-[0.72vmax] truncate">{userData?.email}</p>
-                {userData?.role && (
-                  <span className={`mt-1 inline-block text-[0.65vmax] px-2 py-0.5 rounded-full font-medium ${
-                    userData.role === "admin" ? "bg-[#ede9fb] text-[#624FA4]" : "bg-blue-50 text-blue-600"
-                  }`}>
-                    {userData.role === "admin" ? "Admin" : "User"}
-                  </span>
-                )}
               </div>
 
               {/* Nav items */}

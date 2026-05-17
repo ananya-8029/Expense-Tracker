@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -23,13 +23,29 @@ const mapMonthlyData = (mongoData) =>
     return found?.total || 0;
   });
 
+const DropdownArrow = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isDropdown, setIsDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const adminUser = useSelector((state) => state.userReducer?.user);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setIsDropdown(false);
+    };
+    if (isDropdown) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isDropdown]);
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
@@ -181,24 +197,58 @@ const AdminPage = () => {
             Admin
           </span>
         </div>
-        <div className="flex items-center gap-4">
-          {adminUser && (
-            <div className="flex items-center gap-2">
-              <img
-                src={adminUser.picture || "https://picsum.photos/id/1/200/300"}
-                alt="admin"
-                referrerPolicy="no-referrer"
-                className="h-[2.5vmax] w-[2.5vmax] rounded-full object-cover"
-              />
-              <span className="text-[0.9vmax] text-[#454242] font-medium">{adminUser.username}</span>
+        <div ref={dropdownRef} className="relative">
+          <button
+            onClick={() => setIsDropdown((p) => !p)}
+            className="flex items-center gap-2 bg-[#f7f6f6] hover:bg-[#ede9fb] rounded-xl px-[1vmax] py-[0.5vmax] transition-colors"
+          >
+            <img
+              src={adminUser?.picture || "https://picsum.photos/id/1/200/300"}
+              alt="admin"
+              referrerPolicy="no-referrer"
+              className="h-[2.2vmax] w-[2.2vmax] rounded-full object-cover"
+            />
+            <span className="text-[0.85vmax] text-[#454242] font-medium">{adminUser?.username}</span>
+            <span className={`text-[#929090] transition-transform duration-200 ${isDropdown ? "rotate-180" : ""}`}>
+              <DropdownArrow />
+            </span>
+          </button>
+
+          {isDropdown && (
+            <div className="absolute top-[3.2vmax] right-0 w-[16vmax] bg-white rounded-xl shadow-xl border border-[#f0eef8] z-50 overflow-hidden">
+              <div className="px-[1.2vmax] py-[1vmax] border-b border-[#f0eef8] flex items-center gap-[0.8vmax]">
+                <img
+                  src={adminUser?.picture || "https://picsum.photos/id/1/200/300"}
+                  referrerPolicy="no-referrer"
+                  className="h-[2.2vmax] w-[2.2vmax] rounded-full object-cover flex-shrink-0"
+                  alt=""
+                />
+                <p className="text-[#372b63] text-[0.85vmax] font-semibold truncate">{adminUser?.username}</p>
+              </div>
+              <div className="py-1">
+                {[
+                  { label: "Profile", path: "/home_page/profile" },
+                  { label: "Settings", path: "/home_page/settings" },
+                ].map(({ label, path }) => (
+                  <button
+                    key={label}
+                    onClick={() => { navigate(path); setIsDropdown(false); }}
+                    className="w-full text-left px-[1.2vmax] py-[0.8vmax] text-[0.82vmax] text-[#454242] hover:bg-[#f7f6f6] hover:text-[#624FA4] transition-colors"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <div className="border-t border-[#f0eef8] py-1">
+                <button
+                  onClick={handleSignOut}
+                  className="w-full text-left px-[1.2vmax] py-[0.8vmax] text-[0.82vmax] text-red-400 hover:bg-red-50 transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
             </div>
           )}
-          <button
-            onClick={handleSignOut}
-            className="text-[0.85vmax] text-[#929090] hover:text-red-400 transition-colors"
-          >
-            Sign Out
-          </button>
         </div>
       </div>
 

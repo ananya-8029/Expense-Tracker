@@ -55,6 +55,7 @@ const ProfilePage = () => {
 
   const handleMenuClick = (icon) => {
     setBtnClick(icon);
+    if (userData?.role === "admin") { navigate("/admin/dashboard"); return; }
     const routes = {
       homeIcon: "/home_page/home",
       dashBoardIcon: "/home_page/dashboard",
@@ -193,21 +194,30 @@ const ProfilePage = () => {
     className: "bg-[#f7f6f6] rounded-lg px-[0.8vmax] py-[0.4vmax] text-[0.82vmax] text-[#372b63] outline-none focus:ring-2 focus:ring-[#c4b8f0] w-full",
   });
 
+  const isAdmin = userData?.role === "admin";
+
   return (
     <div className="bg-[#f7f6f6] min-h-screen h-screen w-full overflow-hidden">
-      <div className="flex justify-end">
-        <NavBar btnClick={btnClick} />
-      </div>
-      <MenuBar setBtnClick={handleMenuClick} btnClick={btnClick} />
+      {!isAdmin && (
+        <div className="flex justify-end">
+          <NavBar btnClick={btnClick} pageTitle="Profile" />
+        </div>
+      )}
+      {!isAdmin && <MenuBar setBtnClick={handleMenuClick} btnClick={btnClick} />}
 
       <div className="h-screen w-full flex items-end justify-end">
-        <div className="h-[89%] w-[95%] overflow-y-auto px-[2vmax] pt-[1.5vmax] pb-[1.5vmax]">
+        <div className={`${isAdmin ? "h-full w-full pt-[1.5vmax]" : "h-[89%] w-[95%]"} overflow-y-auto px-[2vmax] pb-[1.5vmax]`}>
 
-          {/* Header */}
-          <div className="mb-[1.2vmax]">
-            <h1 className="text-[1.6vmax] font-bold text-[#372b63]">My Profile</h1>
-            <p className="text-[#929090] text-[0.78vmax]">Your account information</p>
-          </div>
+          {userData?.role === "admin" && (
+            <div className="mb-[1.2vmax]">
+              <button
+                onClick={() => navigate("/admin/dashboard")}
+                className="flex items-center gap-1 text-[#624FA4] hover:text-[#372b63] text-[0.78vmax] transition-colors"
+              >
+                ← Back to Admin Dashboard
+              </button>
+            </div>
+          )}
 
           {/* Profile card — purple banner */}
           <div className="bg-white rounded-2xl shadow-sm overflow-hidden mb-[1.2vmax]">
