@@ -105,6 +105,42 @@ const googleAuth = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  const { phone, address } = req.body;
+  try {
+    const update = {};
+    if (phone !== undefined) update.phone = phone.trim();
+    if (address) {
+      update["address.street"]  = address.street?.trim() ?? "";
+      update["address.city"]    = address.city?.trim() ?? "";
+      update["address.state"]   = address.state?.trim() ?? "";
+      update["address.country"] = address.country?.trim() ?? "";
+      update["address.pincode"] = address.pincode?.trim() ?? "";
+    }
+    const user = await UserModel.findByIdAndUpdate(req.user.id, { $set: update }, { new: true });
+    return res.status(200).json({ phone: user.phone, address: user.address });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Failed to update profile." });
+  }
+};
+
+const updateUsername = async (req, res) => {
+  const { username } = req.body;
+  if (!username?.trim()) return res.status(400).json({ message: "Name cannot be empty." });
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      req.user.id,
+      { username: username.trim() },
+      { new: true }
+    );
+    return res.status(200).json({ username: user.username });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Failed to update name." });
+  }
+};
+
 const updateProfilePhoto = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: "No file uploaded." });
@@ -121,4 +157,4 @@ const updateProfilePhoto = async (req, res) => {
   }
 };
 
-export { getUser, login, register, googleAuth, updateProfilePhoto };
+export { getUser, login, register, googleAuth, updateProfilePhoto, updateUsername, updateProfile };

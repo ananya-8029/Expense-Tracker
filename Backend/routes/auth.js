@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import fetchuser from "../middleswares/fetchUser.js";
-import { register, login, getUser, googleAuth, updateProfilePhoto } from "../controllers/authUser.js";
+import { register, login, getUser, googleAuth, updateProfilePhoto, updateUsername, updateProfile } from "../controllers/authUser.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,5 +36,7 @@ userrouter.post("/login", login);
 userrouter.post("/google", googleAuth);
 userrouter.get("/getUser", fetchuser, getUser);
 userrouter.put("/update-photo", fetchuser, uploadPhoto.single("photo"), updateProfilePhoto);
+userrouter.put("/update-name", fetchuser, updateUsername);
+userrouter.put("/update-profile", fetchuser, updateProfile);
 
 export default userrouter;

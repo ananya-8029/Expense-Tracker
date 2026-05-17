@@ -9,6 +9,14 @@ const UserSchema = new Schema(
     googleId: { type: String },
     picture: { type: String },
     role: { type: String, enum: ["admin", "user"], default: "user" },
+    phone: { type: String },
+    address: {
+      street:  { type: String },
+      city:    { type: String },
+      state:   { type: String },
+      country: { type: String },
+      pincode: { type: String },
+    },
   },
   { timestamps: true }
 );
