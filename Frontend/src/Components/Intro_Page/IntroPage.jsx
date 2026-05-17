@@ -37,7 +37,8 @@ const IntroPage = () => {
         localStorage.setItem("authTokenExpiration", Date.now() + 3600 * 1000);
         dispatch(setUser(res.data.user));
         setIsLoading(false);
-        navigate("/home_page/dashboard");
+        const role = res.data.user?.role;
+        navigate(role === "admin" ? "/admin/dashboard" : "/home_page/dashboard");
       } catch {
         setIsLoading(false);
         setError("Sign-in failed. Please try again.");

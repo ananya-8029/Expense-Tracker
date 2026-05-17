@@ -82,12 +82,20 @@ const googleAuth = async (req, res) => {
       return res.status(400).json({ message: "Invalid Google token" });
     }
 
+    const adminEmails = (process.env.ADMIN_EMAILS || "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase());
+    const role = adminEmails.includes(email.toLowerCase()) ? "admin" : "user";
+
     let user = await UserModel.findOne({ googleId: id });
     if (!user) {
-      user = await UserModel.create({ googleId: id, email, username: name, picture });
+      user = await UserModel.create({ googleId: id, email, username: name, picture, role });
+    } else if (user.role !== role) {
+      user.role = role;
+      await user.save();
     }
 
-    const data = { user: { id: user.id } };
+    const data = { user: { id: user.id, role: user.role } };
     const authToken = jwt.sign(data, process.env.JWT_KEY, { expiresIn: 3600 });
 
     return res.status(200).json({ authToken, user });

@@ -8,8 +8,10 @@ import moment from "moment";
 import IncomeTrendsChart from "../../utils/IncomeTrendsChart";
 import axios from "axios";
 import { fetchIncome } from "../../Redux/middleswares";
+import useAuthGuard from "../../utils/useAuthGuard";
 
 const IncomePage = () => {
+  useAuthGuard();
   const allIncomes = useSelector((state) => state.incomeReducer.incomes);
   const dispatch = useDispatch();
   const [btnClick, setBtnClick] = useState("viewIncomeIcon");
@@ -140,14 +142,31 @@ const IncomePage = () => {
             </div>
           </div>
 
+          {/* Click-outside overlay */}
+          {showForm && (
+            <div
+              className="absolute left-0 top-0 h-full w-[70%] z-10"
+              onClick={() => setShowForm(false)}
+            />
+          )}
+
           {/* Add Income side panel */}
           {showForm && (
-            <div className="absolute right-0 top-0 h-full bg-white w-[30%] shadow-lg overflow-y-auto">
+            <div className="absolute right-0 top-0 h-full bg-white w-[30%] shadow-lg overflow-y-auto z-20">
               <form
                 onSubmit={handleAddIncome}
                 className="h-full flex flex-col pt-[2vmax] px-[2vmax] gap-4"
               >
-                <h3 className="text-[1.1vmax] font-semibold text-[#372b63]">Add Income</h3>
+                <div className="flex justify-between items-center">
+                  <h3 className="text-[1.1vmax] font-semibold text-[#372b63]">Add Income</h3>
+                  <button
+                    type="button"
+                    onClick={() => setShowForm(false)}
+                    className="text-[#929090] hover:text-[#372b63] text-[1.1vmax] transition-colors leading-none"
+                  >
+                    ✕
+                  </button>
+                </div>
                 {error && <p className="text-red-500 text-[0.8vmax]">{error}</p>}
                 {[
                   { label: "Title", value: title, set: setTitle, placeholder: "e.g., Salary", type: "text" },

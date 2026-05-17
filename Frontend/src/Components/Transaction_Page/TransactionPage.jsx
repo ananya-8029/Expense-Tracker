@@ -6,10 +6,12 @@ import AddTansactionButton from "../../utils/AddTansactionButton";
 import NewTransactionFrom from "../../utils/NewTransactionFrom";
 import axios from "axios";
 import moment from "moment";
+import useAuthGuard from "../../utils/useAuthGuard";
 
 const TransactionPage = () => {
   const [btnClick, setBtnClick] = useState("transactionIcon");
   const [addbtnClick, setAddbtnClick] = useState(false);
+  useAuthGuard();
   const [transactions, setTransactions] = useState([]);
   const navigate = useNavigate();
 

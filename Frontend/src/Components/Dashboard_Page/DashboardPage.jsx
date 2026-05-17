@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
+import useAuthGuard from "../../utils/useAuthGuard";
 
 const DashboardPage = () => {
   const [btnClick, setBtnClick] = useState("dashBoardIcon");
   const [recentTransactions, setRecentTransactions] = useState([]);
   const navigate = useNavigate();
 
+  useAuthGuard();
   const allIncomes = useSelector((state) => state.incomeReducer.incomes);
   const allExpenses = useSelector((state) => state.expenseReducer.expenses);
 

@@ -5,6 +5,7 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store from "./Redux/store.js";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import "./utils/axiosSetup";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
