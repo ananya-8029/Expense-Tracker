@@ -7,6 +7,7 @@ import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
 import { clearExpense } from "../../Redux/Reducers/ExpenseSlice";
 import moment from "moment";
+import defaultAvatar from "../../utils/defaultAvatar";
 
 const UserIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -194,7 +195,7 @@ const NavBar = ({ btnClick, pageTitle }) => {
           <div className="flex h-7 w-7 md:h-[2.8vmax] md:w-[3vmax] rounded-full mx-2 md:mx-[1vmax] flex-shrink-0">
             <img
               className="object-fill rounded-full h-full w-full"
-              src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+              src={userData?.picture || defaultAvatar}
               alt={userData?.username || "User"}
               referrerPolicy="no-referrer"
             />
@@ -217,7 +218,7 @@ const NavBar = ({ btnClick, pageTitle }) => {
             <div className="absolute top-10 md:top-[3.8vmax] right-0 w-44 md:w-[16vmax] bg-white rounded-xl shadow-xl border border-[#f0eef8] z-50 overflow-hidden">
               <div className="px-[1.2vmax] py-[1vmax] border-b border-[#f0eef8] flex items-center gap-[0.8vmax]">
                 <img
-                  src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+                  src={userData?.picture || defaultAvatar}
                   referrerPolicy="no-referrer"
                   className="h-[2.2vmax] w-[2.2vmax] rounded-full object-cover flex-shrink-0"
                   alt=""

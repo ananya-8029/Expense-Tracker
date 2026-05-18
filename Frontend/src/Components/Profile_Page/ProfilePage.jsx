@@ -6,6 +6,7 @@ import NavBar from "../NavBar/NavBar";
 import MenuBar from "../Menu_Bar/MenuBar";
 import useAuthGuard from "../../utils/useAuthGuard";
 import { setUser } from "../../Redux/Reducers/UsersSlice";
+import defaultAvatar from "../../utils/defaultAvatar";
 
 const CameraIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -225,7 +226,7 @@ const ProfilePage = () => {
               <div className="flex items-center gap-3 md:gap-[1.5vmax]">
                 <div className="relative flex-shrink-0">
                   <img
-                    src={photoPreview || userData?.picture || "https://picsum.photos/id/1/200/300"}
+                    src={photoPreview || userData?.picture || defaultAvatar}
                     alt={userData?.username}
                     referrerPolicy="no-referrer"
                     className="h-16 w-16 md:h-[5vmax] md:w-[5vmax] rounded-full object-cover border-[3px] border-white border-opacity-50 shadow-md"

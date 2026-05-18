@@ -14,6 +14,7 @@ import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
 import { clearExpense } from "../../Redux/Reducers/ExpenseSlice";
 import { Audio } from "react-loader-spinner";
+import defaultAvatar from "../../utils/defaultAvatar";
 
 const Tooltip = ({ label }) => (
   <span className="absolute left-full ml-3 bg-[#372b63] text-white text-[0.72vmax] font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-[9999] shadow-lg">
@@ -73,7 +74,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
             <div className="h-[3vmax] w-[3vmax] rounded-full">
               <img
                 className="object-fill rounded-full h-full w-full"
-                src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+                src={userData?.picture || defaultAvatar}
                 alt={userData?.username || "User"}
                 referrerPolicy="no-referrer"
               />

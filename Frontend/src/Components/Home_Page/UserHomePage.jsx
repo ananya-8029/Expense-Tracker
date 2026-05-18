@@ -5,6 +5,7 @@ import NavBar from "../NavBar/NavBar";
 import MenuBar from "../Menu_Bar/MenuBar";
 import useAuthGuard from "../../utils/useAuthGuard";
 import axios from "axios";
+import defaultAvatar from "../../utils/defaultAvatar";
 
 const getGreeting = () => {
   const h = new Date().getHours();
@@ -174,7 +175,7 @@ const UserHomePage = () => {
                       </div>
                       {msg.role === "user" && (
                         <img
-                          src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+                          src={userData?.picture || defaultAvatar}
                           referrerPolicy="no-referrer"
                           className="h-[2vmax] w-[2vmax] rounded-full object-cover flex-shrink-0 mb-0.5 shadow-sm"
                           alt=""

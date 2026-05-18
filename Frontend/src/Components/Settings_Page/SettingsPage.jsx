@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import MenuBar from "../Menu_Bar/MenuBar";
 import useAuthGuard from "../../utils/useAuthGuard";
+import defaultAvatar from "../../utils/defaultAvatar";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
 import { clearExpense } from "../../Redux/Reducers/ExpenseSlice";
@@ -114,7 +115,7 @@ const SettingsPage = () => {
           {/* User summary */}
           <div className="bg-gradient-to-r from-[#624FA4] to-[#372b63] rounded-2xl px-4 md:px-[2vmax] py-4 md:py-[1.5vmax] flex items-center gap-3 md:gap-[1.5vmax]">
             <img
-              src={userData?.picture || "https://picsum.photos/id/1/200/300"}
+              src={userData?.picture || defaultAvatar}
               alt={userData?.username}
               referrerPolicy="no-referrer"
               className="h-12 w-12 md:h-[4vmax] md:w-[4vmax] rounded-full object-cover border-2 border-white border-opacity-40 flex-shrink-0"

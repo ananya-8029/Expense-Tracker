@@ -8,6 +8,7 @@ import { Chart as ChartJS } from "chart.js/auto";
 import { clearUser } from "../../Redux/Reducers/UsersSlice";
 import { clearIncome } from "../../Redux/Reducers/IncomeSlice";
 import { clearExpense } from "../../Redux/Reducers/ExpenseSlice";
+import defaultAvatar from "../../utils/defaultAvatar";
 
 const MONTHS = Array.from({ length: 6 }, (_, i) => {
   const d = new Date();
@@ -203,7 +204,7 @@ const AdminPage = () => {
             className="flex items-center gap-2 bg-[#f7f6f6] hover:bg-[#ede9fb] rounded-xl px-[1vmax] py-[0.5vmax] transition-colors"
           >
             <img
-              src={adminUser?.picture || "https://picsum.photos/id/1/200/300"}
+              src={adminUser?.picture || defaultAvatar}
               alt="admin"
               referrerPolicy="no-referrer"
               className="h-[2.2vmax] w-[2.2vmax] rounded-full object-cover"
@@ -218,7 +219,7 @@ const AdminPage = () => {
             <div className="absolute top-[3.2vmax] right-0 w-[16vmax] bg-white rounded-xl shadow-xl border border-[#f0eef8] z-50 overflow-hidden">
               <div className="px-[1.2vmax] py-[1vmax] border-b border-[#f0eef8] flex items-center gap-[0.8vmax]">
                 <img
-                  src={adminUser?.picture || "https://picsum.photos/id/1/200/300"}
+                  src={adminUser?.picture || defaultAvatar}
                   referrerPolicy="no-referrer"
                   className="h-[2.2vmax] w-[2.2vmax] rounded-full object-cover flex-shrink-0"
                   alt=""
