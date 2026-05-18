@@ -95,7 +95,7 @@ const SettingsPage = () => {
       {!isAdmin && <MenuBar setBtnClick={handleMenuClick} btnClick={btnClick} />}
 
       <div className="h-screen w-full flex items-end justify-end">
-        <div className={`${isAdmin ? "h-full w-full pt-[1.5vmax]" : "h-[89%] w-[95%]"} flex flex-col px-[2vmax] pb-[1.5vmax] gap-[1.5vmax] overflow-y-auto`}>
+        <div className={`${isAdmin ? "h-full w-full pt-4 md:pt-[1.5vmax]" : "h-[calc(100%-3rem)] md:h-[89%] w-full md:w-[95%] pb-16 md:pb-0"} flex flex-col px-4 md:px-[2vmax] pb-4 md:pb-[1.5vmax] gap-3 md:gap-[1.5vmax] overflow-y-auto`}>
 
           {/* Header */}
           <div>
@@ -107,26 +107,24 @@ const SettingsPage = () => {
                 ← Back to Admin Dashboard
               </button>
             )}
-            <h1 className="text-[1.8vmax] font-bold text-[#372b63]">Settings</h1>
-            <p className="text-[#929090] text-[0.82vmax]">Manage your account and preferences</p>
+            <h1 className="text-xl md:text-[1.8vmax] font-bold text-[#372b63]">Settings</h1>
+            <p className="text-[#929090] text-xs md:text-[0.82vmax]">Manage your account and preferences</p>
           </div>
 
           {/* User summary */}
-          <div className="bg-gradient-to-r from-[#624FA4] to-[#372b63] rounded-2xl px-[2vmax] py-[1.5vmax] flex items-center gap-[1.5vmax]">
+          <div className="bg-gradient-to-r from-[#624FA4] to-[#372b63] rounded-2xl px-4 md:px-[2vmax] py-4 md:py-[1.5vmax] flex items-center gap-3 md:gap-[1.5vmax]">
             <img
               src={userData?.picture || "https://picsum.photos/id/1/200/300"}
               alt={userData?.username}
               referrerPolicy="no-referrer"
-              className="h-[4vmax] w-[4vmax] rounded-full object-cover border-2 border-white border-opacity-40 flex-shrink-0"
+              className="h-12 w-12 md:h-[4vmax] md:w-[4vmax] rounded-full object-cover border-2 border-white border-opacity-40 flex-shrink-0"
             />
-            <div>
-              <p className="text-white text-[1.1vmax] font-bold">{userData?.username || "User"}</p>
-              <p className="text-white text-opacity-70 text-[0.78vmax]">{userData?.email}</p>
+            <div className="min-w-0">
+              <p className="text-white text-sm md:text-[1.1vmax] font-bold">{userData?.username || "User"}</p>
+              <p className="text-white text-opacity-70 text-xs md:text-[0.78vmax] truncate">{userData?.email}</p>
             </div>
-            <div className="ml-auto">
-              <span className={`text-[0.7vmax] px-3 py-1 rounded-full font-medium ${
-                userData?.role === "admin" ? "bg-white bg-opacity-20 text-white" : "bg-white bg-opacity-20 text-white"
-              }`}>
+            <div className="ml-auto flex-shrink-0">
+              <span className="text-[10px] md:text-[0.7vmax] px-3 py-1 rounded-full font-medium bg-white bg-opacity-20 text-white">
                 {userData?.role === "admin" ? "Administrator" : "User"}
               </span>
             </div>
@@ -135,20 +133,20 @@ const SettingsPage = () => {
           {/* Settings sections */}
           {sections.map((section) => (
             <div key={section.title} className="bg-white rounded-2xl shadow-sm overflow-hidden">
-              <div className="px-[2vmax] py-[1vmax] border-b border-[#f7f6f6]">
-                <h3 className="text-[#372b63] text-[0.9vmax] font-semibold">{section.title}</h3>
+              <div className="px-4 md:px-[2vmax] py-3 md:py-[1vmax] border-b border-[#f7f6f6]">
+                <h3 className="text-[#372b63] text-sm md:text-[0.9vmax] font-semibold">{section.title}</h3>
               </div>
               <div className="divide-y divide-[#f7f6f6]">
                 {section.items.map((item) => (
-                  <div key={item.label} className="flex items-center justify-between px-[2vmax] py-[1.2vmax]">
-                    <div>
-                      <p className="text-[#454242] text-[0.85vmax] font-medium">{item.label}</p>
-                      <p className="text-[#929090] text-[0.75vmax] mt-0.5">{item.description}</p>
+                  <div key={item.label} className="flex items-center justify-between px-4 md:px-[2vmax] py-3 md:py-[1.2vmax] gap-3">
+                    <div className="min-w-0">
+                      <p className="text-[#454242] text-sm md:text-[0.85vmax] font-medium">{item.label}</p>
+                      <p className="text-[#929090] text-xs md:text-[0.75vmax] mt-0.5">{item.description}</p>
                     </div>
                     {item.action && (
                       <button
                         onClick={item.action}
-                        className={`text-[0.78vmax] px-[1.2vmax] py-[0.5vmax] rounded-lg font-medium transition-colors ${
+                        className={`text-xs md:text-[0.78vmax] px-3 py-1.5 md:px-[1.2vmax] md:py-[0.5vmax] rounded-lg font-medium transition-colors flex-shrink-0 ${
                           item.variant === "warning"
                             ? "text-red-400 hover:bg-red-50 border border-red-200"
                             : item.variant === "danger"

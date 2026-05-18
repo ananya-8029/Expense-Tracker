@@ -206,7 +206,7 @@ const ProfilePage = () => {
       {!isAdmin && <MenuBar setBtnClick={handleMenuClick} btnClick={btnClick} />}
 
       <div className="h-screen w-full flex items-end justify-end">
-        <div className={`${isAdmin ? "h-full w-full pt-[1.5vmax]" : "h-[89%] w-[95%]"} overflow-y-auto px-[2vmax] pb-[1.5vmax]`}>
+        <div className={`${isAdmin ? "h-full w-full pt-4 md:pt-[1.5vmax]" : "h-[calc(100%-3rem)] md:h-[89%] w-full md:w-[95%] pb-16 md:pb-0"} overflow-y-auto px-4 md:px-[2vmax] pb-4 md:pb-[1.5vmax]`}>
 
           {userData?.role === "admin" && (
             <div className="mb-[1.2vmax]">
@@ -221,33 +221,33 @@ const ProfilePage = () => {
 
           {/* Profile card — purple banner */}
           <div className="bg-white rounded-2xl shadow-sm overflow-hidden mb-[1.2vmax]">
-            <div className="bg-gradient-to-r from-[#624FA4] to-[#372b63] px-[2vmax] py-[1.8vmax] flex items-center justify-between gap-[1.5vmax]">
-              <div className="flex items-center gap-[1.5vmax]">
+            <div className="bg-gradient-to-r from-[#624FA4] to-[#372b63] px-4 md:px-[2vmax] py-4 md:py-[1.8vmax] flex flex-wrap items-center justify-between gap-3 md:gap-[1.5vmax]">
+              <div className="flex items-center gap-3 md:gap-[1.5vmax]">
                 <div className="relative flex-shrink-0">
                   <img
                     src={photoPreview || userData?.picture || "https://picsum.photos/id/1/200/300"}
                     alt={userData?.username}
                     referrerPolicy="no-referrer"
-                    className="h-[5vmax] w-[5vmax] rounded-full object-cover border-[3px] border-white border-opacity-50 shadow-md"
+                    className="h-16 w-16 md:h-[5vmax] md:w-[5vmax] rounded-full object-cover border-[3px] border-white border-opacity-50 shadow-md"
                   />
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="absolute bottom-0 right-0 h-[1.6vmax] w-[1.6vmax] bg-white bg-opacity-20 hover:bg-opacity-40 rounded-full flex items-center justify-center text-white shadow transition-all"
+                    className="absolute bottom-0 right-0 h-6 w-6 md:h-[1.6vmax] md:w-[1.6vmax] bg-white bg-opacity-20 hover:bg-opacity-40 rounded-full flex items-center justify-center text-white shadow transition-all"
                   >
                     <CameraIcon />
                   </button>
                   <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoSelect} className="hidden" />
                 </div>
                 <div>
-                  <h2 className="text-white text-[1.3vmax] font-bold leading-tight">{userData?.username || "User"}</h2>
-                  <p className="text-white text-opacity-70 text-[0.8vmax] mt-0.5">{userData?.email}</p>
+                  <h2 className="text-white text-base md:text-[1.3vmax] font-bold leading-tight">{userData?.username || "User"}</h2>
+                  <p className="text-white text-opacity-70 text-xs md:text-[0.8vmax] mt-0.5">{userData?.email}</p>
                 </div>
               </div>
               {photoFile && (
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  {uploadError && <span className="text-red-300 text-[0.72vmax]">{uploadError}</span>}
-                  <button onClick={handleCancelPhoto} className="text-[0.75vmax] px-[1vmax] py-[0.45vmax] rounded-lg border border-white border-opacity-30 text-white hover:bg-white hover:bg-opacity-10 transition-colors">Cancel</button>
-                  <button onClick={handlePhotoUpload} disabled={uploading} className="text-[0.75vmax] px-[1vmax] py-[0.45vmax] rounded-lg bg-white text-[#624FA4] font-medium hover:bg-opacity-90 disabled:opacity-60 transition-colors">
+                  {uploadError && <span className="text-red-300 text-xs md:text-[0.72vmax]">{uploadError}</span>}
+                  <button onClick={handleCancelPhoto} className="text-xs md:text-[0.75vmax] px-3 py-1 md:px-[1vmax] md:py-[0.45vmax] rounded-lg border border-white border-opacity-30 text-white hover:bg-white hover:bg-opacity-10 transition-colors">Cancel</button>
+                  <button onClick={handlePhotoUpload} disabled={uploading} className="text-xs md:text-[0.75vmax] px-3 py-1 md:px-[1vmax] md:py-[0.45vmax] rounded-lg bg-white text-[#624FA4] font-medium hover:bg-opacity-90 disabled:opacity-60 transition-colors">
                     {uploading ? "Saving..." : "Save Photo"}
                   </button>
                 </div>
@@ -255,10 +255,10 @@ const ProfilePage = () => {
             </div>
 
             {/* Basic info */}
-            <div className="px-[2vmax] py-[0.8vmax] divide-y divide-[#f7f6f6]">
+            <div className="px-4 md:px-[2vmax] py-2 md:py-[0.8vmax] divide-y divide-[#f7f6f6]">
               {/* Display Name */}
-              <div className="flex items-center gap-[1.5vmax] py-[0.85vmax]">
-                <span className="text-[#929090] text-[0.78vmax] w-[8vmax] flex-shrink-0">Display Name</span>
+              <div className="flex items-center gap-3 md:gap-[1.5vmax] py-3 md:py-[0.85vmax]">
+                <span className="text-[#929090] text-xs md:text-[0.78vmax] w-24 md:w-[8vmax] flex-shrink-0">Display Name</span>
                 {editingName ? (
                   <div className="flex items-center gap-2">
                     {nameError && <span className="text-red-400 text-[0.72vmax]">{nameError}</span>}
@@ -283,17 +283,17 @@ const ProfilePage = () => {
               </div>
 
               {/* Email */}
-              <div className="flex items-center gap-[1.5vmax] py-[0.85vmax]">
-                <span className="text-[#929090] text-[0.78vmax] w-[8vmax] flex-shrink-0">Email</span>
-                <span className="text-[#454242] text-[0.82vmax] font-medium">{userData?.email || "—"}</span>
+              <div className="flex items-center gap-3 md:gap-[1.5vmax] py-3 md:py-[0.85vmax]">
+                <span className="text-[#929090] text-xs md:text-[0.78vmax] w-24 md:w-[8vmax] flex-shrink-0">Email</span>
+                <span className="text-[#454242] text-sm md:text-[0.82vmax] font-medium break-all">{userData?.email || "—"}</span>
               </div>
             </div>
           </div>
 
           {/* Phone Number card */}
-          <div className="bg-white rounded-2xl shadow-sm px-[2vmax] py-[1.2vmax] mb-[1.2vmax]">
-            <div className="flex items-center justify-between mb-[0.8vmax]">
-              <h3 className="text-[#372b63] text-[0.9vmax] font-semibold">Phone Number</h3>
+          <div className="bg-white rounded-2xl shadow-sm px-4 md:px-[2vmax] py-4 md:py-[1.2vmax] mb-3 md:mb-[1.2vmax]">
+            <div className="flex items-center justify-between mb-2 md:mb-[0.8vmax]">
+              <h3 className="text-[#372b63] text-sm md:text-[0.9vmax] font-semibold">Phone Number</h3>
               {!editingPhone && (
                 <button onClick={startEditPhone} className="flex items-center gap-1.5 text-[0.75vmax] text-[#624FA4] hover:text-[#372b63] transition-colors">
                   <EditIcon /> Edit
@@ -327,9 +327,9 @@ const ProfilePage = () => {
           </div>
 
           {/* Address card */}
-          <div className="bg-white rounded-2xl shadow-sm px-[2vmax] py-[1.2vmax]">
-            <div className="flex items-center justify-between mb-[0.8vmax]">
-              <h3 className="text-[#372b63] text-[0.9vmax] font-semibold">Address Details</h3>
+          <div className="bg-white rounded-2xl shadow-sm px-4 md:px-[2vmax] py-4 md:py-[1.2vmax]">
+            <div className="flex items-center justify-between mb-2 md:mb-[0.8vmax]">
+              <h3 className="text-[#372b63] text-sm md:text-[0.9vmax] font-semibold">Address Details</h3>
               {!editingAddress && (
                 <button onClick={startEditAddress} className="flex items-center gap-1.5 text-[0.75vmax] text-[#624FA4] hover:text-[#372b63] transition-colors">
                   <EditIcon /> Edit
@@ -339,7 +339,7 @@ const ProfilePage = () => {
             {editingAddress ? (
               <div className="flex flex-col gap-[0.8vmax]">
                 {addressError && <p className="text-red-400 text-[0.72vmax]">{addressError}</p>}
-                <div className="grid grid-cols-2 gap-[0.8vmax]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-[0.8vmax]">
                   {[
                     { key: "street",  label: "Street / Area", placeholder: "e.g. 12 MG Road" },
                     { key: "city",    label: "City",           placeholder: "e.g. Mumbai" },

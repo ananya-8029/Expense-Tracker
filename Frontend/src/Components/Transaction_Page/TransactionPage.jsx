@@ -81,7 +81,7 @@ const TransactionPage = () => {
       </div>
       <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
       <div className="h-screen w-full flex items-end justify-end">
-        <div className="h-[89%] w-[95%] flex justify-center relative">
+        <div className="h-[calc(100%-3rem)] md:h-[89%] w-full md:w-[95%] flex justify-center relative pb-16 md:pb-0">
 
           {/* Header + table */}
           <div className={`h-full flex flex-col transition-all duration-300 ${addbtnClick ? "w-[70%]" : "w-full"}`}>
@@ -92,11 +92,12 @@ const TransactionPage = () => {
               </div>
             </div>
 
-            <div className="flex-1 overflow-auto px-[1.5vmax]">
+            <div className="flex-1 overflow-auto px-3 md:px-[1.5vmax]">
               {transactions.length === 0 ? (
-                <p className="text-[#929090] text-[0.9vmax] mt-4">No transactions yet. Add your first one!</p>
+                <p className="text-[#929090] text-xs md:text-[0.9vmax] mt-4">No transactions yet. Add your first one!</p>
               ) : (
-                <table className="w-full text-[0.85vmax] bg-white rounded-xl overflow-hidden">
+                <div className="overflow-x-auto">
+                <table className="w-full text-xs md:text-[0.85vmax] bg-white rounded-xl overflow-hidden min-w-[500px]">
                   <thead>
                     <tr className="bg-[#f7f6f6] text-[#929090] font-normal">
                       <th className="text-left p-3 font-normal">Date</th>
@@ -137,6 +138,7 @@ const TransactionPage = () => {
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
           </div>

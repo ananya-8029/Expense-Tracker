@@ -109,7 +109,7 @@ const UserHomePage = () => {
       <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
 
       <div className="h-screen w-full flex items-end justify-end">
-        <div className="h-[89%] w-[95%] flex flex-col px-[2vmax] pt-[1vmax] pb-[1.5vmax]">
+        <div className="h-[calc(100%-3rem)] md:h-[89%] w-full md:w-[95%] flex flex-col px-3 md:px-[2vmax] pt-2 md:pt-[1vmax] pb-[4.5rem] md:pb-[1.5vmax]">
 
           {/* Chat area */}
           <div className="flex-1 bg-white rounded-2xl shadow-sm flex flex-col overflow-hidden border border-[#ede9fb]">

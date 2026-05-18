@@ -84,16 +84,16 @@ const LoginPage = () => {
           <Audio type="TailSpin" color="#ffffff" height={80} width={80} />
         </div>
       )}
-      <div className="min-h-screen h-screen w-full flex">
-        <div className="w-[40%] h-full flex flex-col justify-center items-center">
+      <div className="min-h-screen h-screen w-full flex flex-col md:flex-row">
+        <div className="w-full md:w-[40%] h-full flex flex-col justify-center items-center py-10 md:py-0">
           <div className="loginHeader flex flex-col items-center">
-            <h1 className="text-[2.8vmax] font-bold">Welcome Back!</h1>
-            <p className="text-[1.1vmax] font-light">
+            <h1 className="text-3xl md:text-[2.8vmax] font-bold">Welcome Back!</h1>
+            <p className="text-sm md:text-[1.1vmax] font-light">
               Sign in to your account.
             </p>
           </div>
-          <form className="loginform h-[30%] flex flex-col justify-center items-center w-[50%] gap-6">
-            <div className="w-full flex justify-center items-center px-[1vmax]">
+          <form className="loginform flex flex-col justify-center items-center w-[80%] sm:w-[60%] md:w-[50%] gap-6 mt-8 md:mt-0 md:h-[30%]">
+            <div className="w-full flex justify-center items-center px-4 md:px-[1vmax]">
               {emailIcon}
               <input
                 type="email"
@@ -103,10 +103,10 @@ const LoginPage = () => {
                   setEmail(e.target.value);
                 }}
                 required
-                className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
+                className="h-12 md:h-[3.5vmax] w-full focus:outline-none px-4 md:px-[1vmax]"
               />
             </div>
-            <div className="w-full flex items-center px-[1vmax]">
+            <div className="w-full flex items-center px-4 md:px-[1vmax]">
               {passwordIcon}
               <input
                 type="password"
@@ -116,35 +116,32 @@ const LoginPage = () => {
                   setPassword(e.target.value);
                 }}
                 required
-                className="h-[3.5vmax] w-full focus:outline-none px-[1vmax]"
+                className="h-12 md:h-[3.5vmax] w-full focus:outline-none px-4 md:px-[1vmax]"
               />
             </div>
             {errMessage && (
-              <span className="text-red-400 text-[0.9vmax]">{errMessage}</span>
+              <span className="text-red-400 text-sm md:text-[0.9vmax]">{errMessage}</span>
             )}
           </form>
-          <div className="btn flex flex-col justify-center items-center">
+          <div className="btn flex flex-col justify-center items-center mt-6 md:mt-0">
             <button
               onClick={handleSubmit}
-              className="relative hover:text-[#fff] py-2 px-6 after:absolute after:h-1 after:hover:h-[200%] transition-all duration-500 hover:transition-all hover:duration-500 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden z-20 after:z-[-20] after:bg-[#624FA4] after:rounded-t-full after:w-full after:bottom-0 after:left-0 text-[#372b63] w-[8vmax] font-semibold text-[1.1vmax]"
+              className="relative hover:text-[#fff] py-2 px-8 after:absolute after:h-1 after:hover:h-[200%] transition-all duration-500 hover:transition-all hover:duration-500 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden z-20 after:z-[-20] after:bg-[#624FA4] after:rounded-t-full after:w-full after:bottom-0 after:left-0 text-[#372b63] font-semibold text-base md:text-[1.1vmax] min-w-[100px]"
             >
               Login
             </button>
-            <p className="text-[0.8vmax] py-[1vmax]">
+            <p className="text-xs md:text-[0.8vmax] py-3 md:py-[1vmax]">
               Don&apos;t have an account?
               <button
                 onClick={handleSignupBtn}
-                className="px-[0.5vmax] hover:text-[#624FA4] cursor-pointer"
+                className="px-2 md:px-[0.5vmax] hover:text-[#624FA4] cursor-pointer"
               >
                 Create One!
               </button>
             </p>
           </div>
         </div>
-        <div
-          className="w-[60%] h-full flex justify-center items-center
-        "
-        >
+        <div className="hidden md:flex w-[60%] h-full justify-center items-center">
           <img src="src/assets/loginBg.jpg" className="h-[60%] w-[70%]" />
         </div>
       </div>

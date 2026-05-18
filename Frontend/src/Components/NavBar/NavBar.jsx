@@ -75,12 +75,12 @@ const NavBar = ({ btnClick, pageTitle }) => {
   ];
 
   return (
-    <div className="h-[4vmax] w-[95%] flex justify-center items-center fixed z-[5000]">
-      <div className="h-full w-[99%] flex justify-end items-center bg-white mt-[1.5vmax] gap-10 rounded-xl">
+    <div className="h-12 md:h-[4vmax] w-full md:w-[95%] flex justify-center items-center fixed z-[5000]">
+      <div className="h-full w-full md:w-[99%] flex justify-end items-center bg-white mt-2 md:mt-[1.5vmax] gap-3 md:gap-10 rounded-xl px-3 md:px-0">
         <div className="w-full flex justify-start">
-          <span className="nav_header text-[2vmax] font-bold mx-[2vmax]">{header}</span>
+          <span className="nav_header text-base md:text-[2vmax] font-bold mx-3 md:mx-[2vmax]">{header}</span>
         </div>
-        <div className="h-[60%] w-[45vmax] flex items-center relative">
+        <div className="hidden md:flex h-[60%] w-[45vmax] items-center relative">
           <div className="absolute left-2">{searchIcon}</div>
           <input
             className="search_bar bg-[#f7f6f6] h-full w-full rounded-xl py-[1vmax] px-[2.5vmax] focus:outline-none focus:ring-1 focus:ring-[#ab9ce3] focus:border-transparent text-[0.9vmax] font-light"
@@ -90,8 +90,8 @@ const NavBar = ({ btnClick, pageTitle }) => {
         </div>
 
         {/* Profile dropdown container */}
-        <div ref={dropdownRef} className="bg-[#f7f6f6] h-[3.2vmax] w-[30%] mx-[1vmax] rounded-xl flex justify-center items-center relative">
-          <div className="flex flex-3 h-[2.8vmax] w-[3vmax] rounded-full mx-[1vmax]">
+        <div ref={dropdownRef} className="bg-[#f7f6f6] h-9 md:h-[3.2vmax] min-w-[120px] md:w-[30%] mx-2 md:mx-[1vmax] rounded-xl flex justify-center items-center relative flex-shrink-0">
+          <div className="flex h-7 w-7 md:h-[2.8vmax] md:w-[3vmax] rounded-full mx-2 md:mx-[1vmax] flex-shrink-0">
             <img
               className="object-fill rounded-full h-full w-full"
               src={userData?.picture || "https://picsum.photos/id/1/200/300"}
@@ -99,13 +99,13 @@ const NavBar = ({ btnClick, pageTitle }) => {
               referrerPolicy="no-referrer"
             />
           </div>
-          <div className="profile font-poppins flex-1 flex flex-col justify-center items-center">
-            <span className="text-[#454242] text-[1.1vmax] font-medium">{userData?.username || ""}</span>
-            <span className="text-[#929090] text-[0.8vmax] font-light">{userData?.email || ""}</span>
+          <div className="profile font-poppins flex-1 hidden sm:flex flex-col justify-center items-center">
+            <span className="text-[#454242] text-sm md:text-[1.1vmax] font-medium">{userData?.username || ""}</span>
+            <span className="text-[#929090] text-xs md:text-[0.8vmax] font-light">{userData?.email || ""}</span>
           </div>
           <button
             onClick={() => setIsDropdown((prev) => !prev)}
-            className="flex-2 flex items-center justify-center mx-[1vmax]"
+            className="flex items-center justify-center mx-2 md:mx-[1vmax] flex-shrink-0"
           >
             <span className={`transition-transform duration-200 ${isDropdown ? "rotate-180" : ""}`}>
               {dropDownList}
@@ -114,7 +114,7 @@ const NavBar = ({ btnClick, pageTitle }) => {
 
           {/* Dropdown menu */}
           {isDropdown && (
-            <div className="absolute top-[3.8vmax] right-0 w-[16vmax] bg-white rounded-xl shadow-xl border border-[#f0eef8] z-50 overflow-hidden">
+            <div className="absolute top-10 md:top-[3.8vmax] right-0 w-44 md:w-[16vmax] bg-white rounded-xl shadow-xl border border-[#f0eef8] z-50 overflow-hidden">
               {/* User info header */}
               <div className="px-[1.2vmax] py-[1vmax] border-b border-[#f0eef8] flex items-center gap-[0.8vmax]">
                 <img

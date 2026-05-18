@@ -48,6 +48,14 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
     dispatch(clearExpense());
   };
 
+  const navItems = [
+    { key: "homeIcon",         icon: homeIcon,         label: "Home" },
+    { key: "dashBoardIcon",    icon: dashBoardIcon,    label: "Dashboard" },
+    { key: "transactionIcon",  icon: transactionIcon,  label: "Transactions" },
+    { key: "viewIncomeIcon",   icon: viewIncomeIcon,   label: "Income" },
+    { key: "viewExpensesIcon", icon: viewExpensesIcon, label: "Expenses" },
+  ];
+
   return (
     <>
       {isLoading && (
@@ -55,7 +63,9 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
           <Audio type="TailSpin" color="#ffffff" height={80} width={80} />
         </div>
       )}
-      <div className="h-screen w-[5vmax] flex justify-center items-center fixed z-[100]">
+
+      {/* ── Desktop sidebar (md and up) ── */}
+      <div className="hidden md:flex h-screen w-[5vmax] justify-center items-center fixed z-[100]">
         <div className="h-[97%] w-[95%] bg-white rounded-xl mx-[0.5vmax] flex items-center flex-col">
 
           {/* Avatar + Home */}
@@ -69,13 +79,9 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
               />
             </div>
 
-            {/* Home */}
             <div className="group w-[85%] h-[25%] flex justify-center items-center relative">
               <div className={`relative overflow-hidden w-full h-full flex justify-center items-center ${icon === "homeIcon" ? "active" : ""}`}>
-                <button
-                  onClick={() => handleActivebtn("homeIcon")}
-                  className="relative z-[2] hover:scale-90 transition-all duration-300"
-                >
+                <button onClick={() => handleActivebtn("homeIcon")} className="relative z-[2] hover:scale-90 transition-all duration-300">
                   {homeIcon}
                 </button>
               </div>
@@ -85,53 +91,36 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
 
           {/* Main nav icons */}
           <div className="flex flex-col justify-center items-center h-[45%] gap-[1.5vmax] border-y-[4px] w-[80%] border-[#F7F6F6]">
-
-            {/* Dashboard */}
             <div className="group mt-[2vmax] w-full h-full flex justify-center items-center relative">
               <div className={`relative overflow-hidden w-full h-full flex justify-center items-center ${icon === "dashBoardIcon" ? "active" : ""}`}>
-                <button
-                  onClick={() => handleActivebtn("dashBoardIcon")}
-                  className="relative z-[2] hover:scale-90 transition-all duration-300"
-                >
+                <button onClick={() => handleActivebtn("dashBoardIcon")} className="relative z-[2] hover:scale-90 transition-all duration-300">
                   {dashBoardIcon}
                 </button>
               </div>
               <Tooltip label="Dashboard" />
             </div>
 
-            {/* Transactions */}
             <div className="group w-full h-full flex justify-center items-center relative">
               <div className={`relative overflow-hidden w-full h-full flex justify-center items-center ${icon === "transactionIcon" ? "active" : ""}`}>
-                <button
-                  onClick={() => handleActivebtn("transactionIcon")}
-                  className="relative z-[2] hover:scale-90 transition-all duration-300"
-                >
+                <button onClick={() => handleActivebtn("transactionIcon")} className="relative z-[2] hover:scale-90 transition-all duration-300">
                   {transactionIcon}
                 </button>
               </div>
               <Tooltip label="Transactions" />
             </div>
 
-            {/* Income */}
             <div className="group w-full h-full flex justify-center items-center relative">
               <div className={`relative overflow-hidden w-full h-full flex justify-center items-center ${icon === "viewIncomeIcon" ? "active" : ""}`}>
-                <button
-                  onClick={() => handleActivebtn("viewIncomeIcon")}
-                  className="relative z-[2] hover:scale-90 transition-all duration-300"
-                >
+                <button onClick={() => handleActivebtn("viewIncomeIcon")} className="relative z-[2] hover:scale-90 transition-all duration-300">
                   {viewIncomeIcon}
                 </button>
               </div>
               <Tooltip label="Income" />
             </div>
 
-            {/* Expenses */}
             <div className="group mb-[2vmax] w-full h-full flex justify-center items-center relative">
               <div className={`relative overflow-hidden w-full h-full flex justify-center items-center ${icon === "viewExpensesIcon" ? "active" : ""}`}>
-                <button
-                  onClick={() => handleActivebtn("viewExpensesIcon")}
-                  className="relative z-[2] hover:scale-90 transition-all duration-300"
-                >
+                <button onClick={() => handleActivebtn("viewExpensesIcon")} className="relative z-[2] hover:scale-90 transition-all duration-300">
                   {viewExpensesIcon}
                 </button>
               </div>
@@ -143,10 +132,7 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
           <div className="h-[30%] w-[95%] flex justify-center items-end py-[2vmax]">
             <div className="group w-full h-[30%] flex justify-center items-center relative">
               <div className={`relative overflow-hidden w-full h-full flex justify-center items-center ${icon === "signOut" ? "active" : ""}`}>
-                <button
-                  onClick={handleSignOut}
-                  className="relative z-[2] hover:scale-90 transition-all duration-300"
-                >
+                <button onClick={handleSignOut} className="relative z-[2] hover:scale-90 transition-all duration-300">
                   {signOuticon}
                 </button>
               </div>
@@ -154,6 +140,35 @@ const MenuBar = ({ setBtnClick, btnClick }) => {
             </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* ── Mobile bottom nav (below md) ── */}
+      <div className="flex md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-[#f0eef8] shadow-lg">
+        <div className="w-full flex items-center justify-around h-14 px-1">
+          {navItems.map(({ key, icon: navIcon, label }) => (
+            <button
+              key={key}
+              onClick={() => handleActivebtn(key)}
+              className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors ${
+                icon === key ? "text-[#624FA4]" : "text-[#929090]"
+              }`}
+              aria-label={label}
+            >
+              <span className={`transition-transform ${icon === key ? "scale-110" : ""}`}>
+                {navIcon}
+              </span>
+              <span className="text-[9px] font-medium">{label}</span>
+            </button>
+          ))}
+          <button
+            onClick={handleSignOut}
+            className="flex flex-col items-center justify-center gap-0.5 flex-1 h-full text-[#929090] transition-colors"
+            aria-label="Sign Out"
+          >
+            <span>{signOuticon}</span>
+            <span className="text-[9px] font-medium">Sign Out</span>
+          </button>
         </div>
       </div>
     </>

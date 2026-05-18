@@ -122,30 +122,30 @@ const ExpensePage = () => {
       </div>
       <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
       <div className="h-screen w-full flex items-end justify-end">
-        <div className="h-[89%] w-[95%] relative overflow-hidden">
+        <div className="h-[calc(100%-3rem)] md:h-[89%] w-full md:w-[95%] relative overflow-hidden pb-16 md:pb-0">
 
           {/* Header row */}
-          <div className="flex justify-between items-center px-[2vmax] pt-[1.5vmax] pb-[1vmax]">
-            <h2 className="text-[1.3vmax] font-semibold text-[#372b63]">Expense Records</h2>
+          <div className="flex justify-between items-center px-3 md:px-[2vmax] pt-3 md:pt-[1.5vmax] pb-2 md:pb-[1vmax]">
+            <h2 className="text-base md:text-[1.3vmax] font-semibold text-[#372b63]">Expense Records</h2>
             <button
               onClick={() => showForm ? resetForm() : setShowForm(true)}
-              className="bg-red-400 text-white px-4 py-2 rounded-lg text-[0.85vmax] hover:bg-red-500 transition-colors"
+              className="bg-red-400 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-[0.85vmax] hover:bg-red-500 transition-colors"
             >
               {showForm ? "✕ Close" : "+ Add Expense"}
             </button>
           </div>
 
           {/* Main area */}
-          <div className={`h-[calc(100%-4vmax)] transition-all duration-300 ${showForm ? "w-[70%]" : "w-full"}`}>
+          <div className={`h-[calc(100%-4vmax)] transition-all duration-300 ${showForm ? "w-full md:w-[70%]" : "w-full"}`}>
             <div className="h-full flex flex-wrap pl-[2vmax] overflow-y-auto gap-1 content-start pt-[0.5vmax]">
               {allExpenses.length === 0 ? (
                 <p className="text-[#929090] text-[0.9vmax] mt-4 pl-2">No expense records yet. Add your first one!</p>
               ) : (
                 allExpenses.map((expense) => (
-                  <div key={expense._id} className="expense-content relative bg-white flex flex-col justify-between items-start m-[0.4vmax] w-[14vmax] h-[13vmax] rounded-xl py-[1.2vmax] px-[1.5vmax]">
+                  <div key={expense._id} className="expense-content relative bg-white flex flex-col justify-between items-start m-1 md:m-[0.4vmax] w-[calc(50%-8px)] sm:w-[calc(33%-8px)] md:w-[14vmax] min-h-[160px] md:h-[13vmax] rounded-xl py-3 md:py-[1.2vmax] px-3 md:px-[1.5vmax]">
                     <button
                       onClick={() => handleEditClick(expense)}
-                      className="absolute top-[0.6vmax] right-[0.6vmax] w-[1.6vmax] h-[1.6vmax] flex items-center justify-center rounded-md bg-red-50 text-red-400 hover:bg-red-100 transition-colors z-10"
+                      className="absolute top-2 md:top-[0.6vmax] right-2 md:right-[0.6vmax] w-6 h-6 md:w-[1.6vmax] md:h-[1.6vmax] flex items-center justify-center rounded-md bg-red-50 text-red-400 hover:bg-red-100 transition-colors z-10"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[0.75vmax] h-[0.75vmax]">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -153,20 +153,20 @@ const ExpensePage = () => {
                       </svg>
                     </button>
                     <div className="flex flex-col gap-1 w-full">
-                      <div className="text-[1vmax] font-semibold truncate pr-[2vmax]">{expense.title}</div>
-                      <div className="text-[0.75vmax] font-light text-[#929090] truncate">{expense.description}</div>
-                      <div className="expense-amount text-[1.1vmax] font-bold text-red-400">₹{expense.amount.toLocaleString()}</div>
-                      <span className="text-red-300 text-[0.65vmax] font-medium">
+                      <div className="text-sm md:text-[1vmax] font-semibold truncate pr-8 md:pr-[2vmax]">{expense.title}</div>
+                      <div className="text-xs md:text-[0.75vmax] font-light text-[#929090] truncate">{expense.description}</div>
+                      <div className="expense-amount text-base md:text-[1.1vmax] font-bold text-red-400">₹{expense.amount.toLocaleString()}</div>
+                      <span className="text-red-300 text-[10px] md:text-[0.65vmax] font-medium">
                         {moment(expense.date).format("DD MMM YYYY")}
                       </span>
                     </div>
                     <div className="flex gap-2 w-full mt-1">
-                      <span className="bg-[#F7F6F6] flex-1 h-[1.8vmax] rounded-lg text-[0.65vmax] flex items-center justify-center text-red-400 font-medium truncate px-1">
+                      <span className="bg-[#F7F6F6] flex-1 h-6 md:h-[1.8vmax] rounded-lg text-[10px] md:text-[0.65vmax] flex items-center justify-center text-red-400 font-medium truncate px-1">
                         {expense.category}
                       </span>
                       <button
                         onClick={() => handleDelete(expense._id)}
-                        className="bg-red-50 text-red-400 h-[1.8vmax] px-2 rounded-lg text-[0.65vmax] hover:bg-red-100 transition-colors"
+                        className="bg-red-50 text-red-400 h-6 md:h-[1.8vmax] px-2 rounded-lg text-[10px] md:text-[0.65vmax] hover:bg-red-100 transition-colors"
                       >
                         Delete
                       </button>
@@ -177,17 +177,17 @@ const ExpensePage = () => {
             </div>
           </div>
 
-          {/* Click-outside overlay */}
+          {/* Click-outside overlay (desktop only) */}
           {showForm && (
             <div
-              className="absolute left-0 top-0 h-full w-[70%] z-10"
+              className="hidden md:block absolute left-0 top-0 h-full w-[70%] z-10"
               onClick={() => setShowForm(false)}
             />
           )}
 
           {/* Add Expense side panel */}
           {showForm && (
-            <div className="absolute right-0 top-0 h-full bg-white w-[30%] shadow-lg overflow-y-auto z-20">
+            <div className="absolute right-0 top-0 h-full bg-white w-full md:w-[30%] shadow-lg overflow-y-auto z-20">
               <form
                 onSubmit={handleAddExpense}
                 className="h-full flex flex-col pt-[2vmax] px-[2vmax] gap-4"

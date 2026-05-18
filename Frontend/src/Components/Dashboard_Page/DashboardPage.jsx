@@ -53,38 +53,39 @@ const DashboardPage = () => {
       </div>
       <MenuBar setBtnClick={setBtnClick} btnClick={btnClick} />
       <div className="h-screen w-full flex items-end justify-end">
-        <div className="h-[89%] w-[95%] flex flex-col pt-[2vmax] px-[2vmax] gap-[1.5vmax] overflow-auto">
+        <div className="h-[calc(100%-3rem)] md:h-[89%] w-full md:w-[95%] flex flex-col pt-3 md:pt-[2vmax] px-3 md:px-[2vmax] gap-3 md:gap-[1.5vmax] overflow-auto pb-16 md:pb-0">
 
           {/* Stats cards */}
-          <div className="flex gap-[1.5vmax]">
-            <div className="bg-white rounded-xl p-[2vmax] flex-1 flex flex-col gap-2 shadow-sm">
-              <span className="text-[0.85vmax] text-[#929090] font-light uppercase tracking-wider">Total Income</span>
-              <span className="text-[2vmax] font-bold text-[#624FA4]">₹{totalIncome.toLocaleString()}</span>
-              <span className="text-[0.75vmax] text-green-500">{allIncomes.length} records</span>
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-[1.5vmax]">
+            <div className="bg-white rounded-xl p-4 md:p-[2vmax] flex-1 flex flex-col gap-2 shadow-sm">
+              <span className="text-xs md:text-[0.85vmax] text-[#929090] font-light uppercase tracking-wider">Total Income</span>
+              <span className="text-2xl md:text-[2vmax] font-bold text-[#624FA4]">₹{totalIncome.toLocaleString()}</span>
+              <span className="text-xs md:text-[0.75vmax] text-green-500">{allIncomes.length} records</span>
             </div>
-            <div className="bg-white rounded-xl p-[2vmax] flex-1 flex flex-col gap-2 shadow-sm">
-              <span className="text-[0.85vmax] text-[#929090] font-light uppercase tracking-wider">Total Expenses</span>
-              <span className="text-[2vmax] font-bold text-red-400">₹{totalExpense.toLocaleString()}</span>
-              <span className="text-[0.75vmax] text-red-400">{allExpenses.length} records</span>
+            <div className="bg-white rounded-xl p-4 md:p-[2vmax] flex-1 flex flex-col gap-2 shadow-sm">
+              <span className="text-xs md:text-[0.85vmax] text-[#929090] font-light uppercase tracking-wider">Total Expenses</span>
+              <span className="text-2xl md:text-[2vmax] font-bold text-red-400">₹{totalExpense.toLocaleString()}</span>
+              <span className="text-xs md:text-[0.75vmax] text-red-400">{allExpenses.length} records</span>
             </div>
-            <div className="bg-white rounded-xl p-[2vmax] flex-1 flex flex-col gap-2 shadow-sm">
-              <span className="text-[0.85vmax] text-[#929090] font-light uppercase tracking-wider">Net Balance</span>
-              <span className={`text-[2vmax] font-bold ${netBalance >= 0 ? "text-green-500" : "text-red-400"}`}>
+            <div className="bg-white rounded-xl p-4 md:p-[2vmax] flex-1 flex flex-col gap-2 shadow-sm">
+              <span className="text-xs md:text-[0.85vmax] text-[#929090] font-light uppercase tracking-wider">Net Balance</span>
+              <span className={`text-2xl md:text-[2vmax] font-bold ${netBalance >= 0 ? "text-green-500" : "text-red-400"}`}>
                 ₹{Math.abs(netBalance).toLocaleString()}
               </span>
-              <span className={`text-[0.75vmax] ${netBalance >= 0 ? "text-green-500" : "text-red-400"}`}>
+              <span className={`text-xs md:text-[0.75vmax] ${netBalance >= 0 ? "text-green-500" : "text-red-400"}`}>
                 {netBalance >= 0 ? "Surplus" : "Deficit"}
               </span>
             </div>
           </div>
 
           {/* Recent Transactions */}
-          <div className="bg-white rounded-xl p-[2vmax] flex-1 shadow-sm overflow-auto">
-            <h2 className="text-[1.1vmax] font-semibold text-[#372b63] mb-[1.5vmax]">Recent Transactions</h2>
+          <div className="bg-white rounded-xl p-4 md:p-[2vmax] flex-1 shadow-sm overflow-auto">
+            <h2 className="text-sm md:text-[1.1vmax] font-semibold text-[#372b63] mb-3 md:mb-[1.5vmax]">Recent Transactions</h2>
             {recentTransactions.length === 0 ? (
-              <p className="text-[#929090] text-[0.9vmax]">No transactions yet.</p>
+              <p className="text-[#929090] text-xs md:text-[0.9vmax]">No transactions yet.</p>
             ) : (
-              <table className="w-full text-[0.85vmax]">
+              <div className="overflow-x-auto">
+              <table className="w-full text-xs md:text-[0.85vmax] min-w-[500px]">
                 <thead>
                   <tr className="text-[#929090] font-light border-b border-[#f7f6f6]">
                     <th className="text-left pb-3 font-normal">Date</th>
@@ -116,6 +117,7 @@ const DashboardPage = () => {
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
 
