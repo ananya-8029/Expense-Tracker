@@ -26,7 +26,7 @@ const register = async (req, res) => {
 
       const data = { newUser: { id: newUser.id } };
 
-      const authToken = jwt.sign(data, process.env.JWT_KEY);
+      const authToken = jwt.sign(data, process.env.JWT_KEY, { expiresIn: 3600 });
       return res.status(200).json({ authToken: authToken });
     }
   } catch (error) {
@@ -144,7 +144,7 @@ const updateUsername = async (req, res) => {
 const updateProfilePhoto = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: "No file uploaded." });
-    const pictureUrl = `http://localhost:8000/uploads/profile-photos/${req.file.filename}`;
+    const pictureUrl = `${process.env.SERVER_URL || "http://localhost:8000"}/uploads/profile-photos/${req.file.filename}`;
     const user = await UserModel.findByIdAndUpdate(
       req.user.id,
       { picture: pictureUrl },

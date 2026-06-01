@@ -51,7 +51,7 @@ const NewTransactionFrom = ({ onSuccess }) => {
 
     try {
       await axios.post(
-        "http://localhost:8000/api/transactions/addnewtransaction",
+        `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addnewtransaction`,
         formData,
         { headers: { "auth-token": authToken } }
       );

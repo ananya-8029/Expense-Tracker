@@ -31,7 +31,7 @@ const TransactionPage = () => {
     if (!authToken) return;
     try {
       const res = await axios.get(
-        "http://localhost:8000/api/transactions/gettransactions",
+        "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/gettransactions",
         { headers: { "auth-token": authToken } }
       );
       setTransactions(res.data);
@@ -43,10 +43,11 @@ const TransactionPage = () => {
   useEffect(() => { fetchTransactions(); }, [fetchTransactions]);
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Delete this transaction?")) return;
     const authToken = localStorage.getItem("authToken");
     try {
       await axios.delete(
-        `http://localhost:8000/api/transactions/deletetransaction/${id}`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/deletetransaction/${id}`,
         { headers: { "auth-token": authToken } }
       );
       fetchTransactions();

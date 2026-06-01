@@ -2,15 +2,17 @@ import { useNavigate } from "react-router-dom";
 import MenuBar from "../Menu_Bar/MenuBar";
 import NavBar from "../NavBar/NavBar";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import useAuthGuard from "../../utils/useAuthGuard";
+import { fetchIncome, fetchExpense } from "../../Redux/middleswares";
 
 const DashboardPage = () => {
   const [btnClick, setBtnClick] = useState("dashBoardIcon");
   const [recentTransactions, setRecentTransactions] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useAuthGuard();
   const allIncomes = useSelector((state) => state.incomeReducer.incomes);
@@ -38,8 +40,10 @@ const DashboardPage = () => {
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) return;
+    fetchIncome(dispatch);
+    fetchExpense(dispatch);
     axios
-      .get("http://localhost:8000/api/transactions/gettransactions", {
+      .get(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/gettransactions`, {
         headers: { "auth-token": authToken },
       })
       .then((res) => setRecentTransactions(res.data.slice(0, 5)))

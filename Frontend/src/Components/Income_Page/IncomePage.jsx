@@ -83,13 +83,13 @@ const IncomePage = () => {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:8000/api/transactions/updateincome/${editingId}`,
+          `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/updateincome/${editingId}`,
           { title, amount: Number(amount), category, description, date },
           { headers: { "auth-token": authToken } }
         );
       } else {
         await axios.post(
-          "http://localhost:8000/api/transactions/addincome",
+          "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addincome",
           { title, amount: Number(amount), category, description, date },
           { headers: { "auth-token": authToken } }
         );
@@ -102,10 +102,11 @@ const IncomePage = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Delete this income record?")) return;
     const authToken = localStorage.getItem("authToken");
     try {
       await axios.delete(
-        `http://localhost:8000/api/transactions/deleteincome/${id}`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/deleteincome/${id}`,
         { headers: { "auth-token": authToken } }
       );
       dispatch(fetchIncome);

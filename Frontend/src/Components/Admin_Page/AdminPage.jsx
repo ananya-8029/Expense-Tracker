@@ -54,8 +54,8 @@ const AdminPage = () => {
     const headers = { "auth-token": authToken };
 
     Promise.all([
-      axios.get("http://localhost:8000/api/admin/users", { headers }),
-      axios.get("http://localhost:8000/api/admin/analytics", { headers }),
+      axios.get("${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/admin/users", { headers }),
+      axios.get("${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/admin/analytics", { headers }),
     ])
       .then(([usersRes, analyticsRes]) => {
         setUsers(usersRes.data);

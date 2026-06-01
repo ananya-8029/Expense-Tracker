@@ -1,4 +1,3 @@
-// import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "../Login_Page/LoginPage.css";
 import axios from "axios";
@@ -7,7 +6,9 @@ import { Audio } from "react-loader-spinner";
 import { emailIcon, passwordIcon } from "../../utils/Icons";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../Redux/Reducers/UsersSlice";
-import { fetchIncome } from "../../Redux/middleswares";
+import { fetchIncome, fetchExpense } from "../../Redux/middleswares";
+
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,32 +21,26 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/login",
-        { email, password }
-      );
+      const response = await axios.post(`${API}/api/auth/login`, { email, password });
       if (response.statusText === "OK") {
         const { authToken, user } = response.data;
-
-        const expirationTime = new Date().getTime() + 60 * 60 * 1000; // 1 hour in milliseconds
-
+        const expirationTime = new Date().getTime() + 60 * 60 * 1000;
         localStorage.setItem("authToken", authToken);
         localStorage.setItem("authTokenExpiration", expirationTime);
         dispatch(setUser(user));
         fetchIncome(dispatch);
-
+        fetchExpense(dispatch);
         axios.defaults.headers.common["auth-token"] = authToken;
         setIsLoading(true);
         setTimeout(() => {
           setIsLoading(false);
-          navigate("/home_page");
+          navigate("/home_page/home");
         }, 2500);
       }
       setEmail("");
       setPassword("");
       setErrMessage(null);
     } catch (error) {
-      // console.log(error);
       if (error.response) setErrMessage(error.response.data.message);
     }
   };
@@ -61,22 +56,11 @@ const LoginPage = () => {
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     const expirationTime = localStorage.getItem("authTokenExpiration");
-
-    if (!authToken) {
-      handleSubmit();
-    } else {
-      if (new Date().getTime() > parseInt(expirationTime, 10)) {
-        localStorage.removeItem("authTokenExpiration");
-        localStorage.removeItem("authToken");
-        handleSubmit();
-      } else {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/home_page");
-        }, 2500);
-      }
+    if (authToken && expirationTime && new Date().getTime() < parseInt(expirationTime, 10)) {
+      navigate("/home_page/home");
     }
-  });
+  }, []);
+
   return (
     <>
       {isLoading && (
@@ -99,9 +83,8 @@ const LoginPage = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="h-12 md:h-[3.5vmax] w-full focus:outline-none px-4 md:px-[1vmax]"
               />
@@ -112,9 +95,8 @@ const LoginPage = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="h-12 md:h-[3.5vmax] w-full focus:outline-none px-4 md:px-[1vmax]"
               />

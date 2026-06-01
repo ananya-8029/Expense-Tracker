@@ -84,7 +84,7 @@ const ProfilePage = () => {
     formData.append("photo", photoFile);
     try {
       const authToken = localStorage.getItem("authToken");
-      const res = await axios.put("http://localhost:8000/api/auth/update-photo", formData, {
+      const res = await axios.put("${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/auth/update-photo", formData, {
         headers: { "auth-token": authToken },
       });
       dispatch(setUser({ ...userData, picture: res.data.picture }));
@@ -118,7 +118,7 @@ const ProfilePage = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const res = await axios.put(
-        "http://localhost:8000/api/auth/update-name",
+        "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/auth/update-name",
         { username: nameInput.trim() },
         { headers: { "auth-token": authToken } }
       );
@@ -144,7 +144,7 @@ const ProfilePage = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const res = await axios.put(
-        "http://localhost:8000/api/auth/update-profile",
+        "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/auth/update-profile",
         { phone: phoneInput },
         { headers: { "auth-token": authToken } }
       );
@@ -176,7 +176,7 @@ const ProfilePage = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const res = await axios.put(
-        "http://localhost:8000/api/auth/update-profile",
+        "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/auth/update-profile",
         { address: addressForm },
         { headers: { "auth-token": authToken } }
       );

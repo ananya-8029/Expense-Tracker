@@ -84,13 +84,13 @@ const ExpensePage = () => {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:8000/api/transactions/updateexpense/${editingId}`,
+          `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/updateexpense/${editingId}`,
           { title, amount: Number(amount), category, description, date },
           { headers: { "auth-token": authToken } }
         );
       } else {
         await axios.post(
-          "http://localhost:8000/api/transactions/addexpense",
+          "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addexpense",
           { title, amount: Number(amount), category, description, date },
           { headers: { "auth-token": authToken } }
         );
@@ -103,10 +103,11 @@ const ExpensePage = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Delete this expense record?")) return;
     const authToken = localStorage.getItem("authToken");
     try {
       await axios.delete(
-        `http://localhost:8000/api/transactions/deleteexpense/${id}`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/deleteexpense/${id}`,
         { headers: { "auth-token": authToken } }
       );
       dispatch(fetchExpense);

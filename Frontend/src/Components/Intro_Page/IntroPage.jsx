@@ -7,6 +7,7 @@ import { checkIcon } from "../../utils/Icons";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../Redux/Reducers/UsersSlice";
+import { fetchIncome, fetchExpense } from "../../Redux/middleswares";
 import axios from "axios";
 
 const IntroAppStyle = styled.div`
@@ -37,12 +38,14 @@ const IntroPage = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        const res = await axios.post("http://localhost:8000/api/auth/google", {
+        const res = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/auth/google`, {
           accessToken: tokenResponse.access_token,
         });
         localStorage.setItem("authToken", res.data.authToken);
         localStorage.setItem("authTokenExpiration", Date.now() + 3600 * 1000);
         dispatch(setUser(res.data.user));
+        fetchIncome(dispatch);
+        fetchExpense(dispatch);
         setIsLoading(false);
         const role = res.data.user?.role;
         navigate(role === "admin" ? "/admin/dashboard" : "/home_page/home");
