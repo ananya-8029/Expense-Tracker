@@ -31,7 +31,7 @@ const TransactionPage = () => {
     if (!authToken) return;
     try {
       const res = await axios.get(
-        "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/gettransactions",
+        `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/gettransactions`,
         { headers: { "auth-token": authToken } }
       );
       setTransactions(res.data);

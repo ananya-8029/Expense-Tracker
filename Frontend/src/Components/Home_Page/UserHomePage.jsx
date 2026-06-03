@@ -79,7 +79,7 @@ const UserHomePage = () => {
       const authToken = localStorage.getItem("authToken");
       const history = messages.slice(-6).map(({ role, content }) => ({ role, content }));
       const res = await axios.post(
-        "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/ai/ask",
+        `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/ai/ask`,
         { prompt, history },
         { headers: { "auth-token": authToken } }
       );

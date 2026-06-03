@@ -89,7 +89,7 @@ const IncomePage = () => {
         );
       } else {
         await axios.post(
-          "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addincome",
+          `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addincome`,
           { title, amount: Number(amount), category, description, date },
           { headers: { "auth-token": authToken } }
         );

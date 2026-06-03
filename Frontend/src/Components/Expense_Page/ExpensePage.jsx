@@ -90,7 +90,7 @@ const ExpensePage = () => {
         );
       } else {
         await axios.post(
-          "${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addexpense",
+          `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/transactions/addexpense`,
           { title, amount: Number(amount), category, description, date },
           { headers: { "auth-token": authToken } }
         );
