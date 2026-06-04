@@ -90,9 +90,18 @@ const googleAuth = async (req, res) => {
     let user = await UserModel.findOne({ googleId: id });
     if (!user) {
       user = await UserModel.create({ googleId: id, email, username: name, picture, role });
-    } else if (user.role !== role) {
-      user.role = role;
-      await user.save();
+    } else {
+      let changed = false;
+      if (user.role !== role) {
+        user.role = role;
+        changed = true;
+      }
+      // Backfill the Google account photo if the user hasn't set one of their own.
+      if (!user.picture && picture) {
+        user.picture = picture;
+        changed = true;
+      }
+      if (changed) await user.save();
     }
 
     const data = { user: { id: user.id, role: user.role } };
