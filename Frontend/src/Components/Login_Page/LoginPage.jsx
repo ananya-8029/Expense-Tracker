@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "../Login_Page/LoginPage.css";
 import axios from "axios";
+import loginBg from "../../assets/loginBg.jpg";
 import { useEffect, useState } from "react";
 import { Audio } from "react-loader-spinner";
 import { emailIcon, passwordIcon } from "../../utils/Icons";
@@ -124,7 +125,7 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="hidden md:flex w-[60%] h-full justify-center items-center">
-          <img src="src/assets/loginBg.jpg" className="h-[60%] w-[70%]" />
+          <img src={loginBg} className="h-[60%] w-[70%]" />
         </div>
       </div>
     </>

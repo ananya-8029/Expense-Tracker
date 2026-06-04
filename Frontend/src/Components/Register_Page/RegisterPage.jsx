@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
 import { emailIcon, passwordIcon, usernameIcon } from "../../utils/Icons";
+import loginBg from "../../assets/loginBg.jpg";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -120,7 +121,7 @@ const RegisterPage = () => {
           </div>
         </div>
         <div className="hidden md:flex w-[60%] h-full justify-center items-center">
-          <img src="src/assets/loginBg.jpg" className="h-[60%] w-[70%]" />
+          <img src={loginBg} className="h-[60%] w-[70%]" />
         </div>
       </div>
     </>

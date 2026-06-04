@@ -16,6 +16,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT;
 
+// Trust the reverse proxy (e.g. Render) so req.protocol reflects X-Forwarded-Proto
+// (https) instead of the internal http hop. Needed for building correct asset URLs.
+app.set("trust proxy", true);
+
 app.use(express.json());
 const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
   .split(",")

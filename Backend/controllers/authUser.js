@@ -144,7 +144,10 @@ const updateUsername = async (req, res) => {
 const updateProfilePhoto = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: "No file uploaded." });
-    const pictureUrl = `${process.env.SERVER_URL || "http://localhost:8000"}/uploads/profile-photos/${req.file.filename}`;
+    // Derive the base URL from the request so uploaded-photo URLs are correct in
+    // both local dev and production, regardless of any SERVER_URL env setting.
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const pictureUrl = `${baseUrl}/uploads/profile-photos/${req.file.filename}`;
     const user = await UserModel.findByIdAndUpdate(
       req.user.id,
       { picture: pictureUrl },
